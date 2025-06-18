@@ -11,6 +11,18 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'home',
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'details/:name',
+    loadChildren: () => import('./pages/details/details.module').then( m => m.DetailsPageModule)
+  },
+  {
+    path: 'favorites',
+    loadChildren: () => import('./pages/favorites/favorites.module').then( m => m.FavoritesPageModule)
+  },
 ];
 
 @NgModule({
