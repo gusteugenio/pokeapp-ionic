@@ -10,7 +10,7 @@ Site construído com Ionic + Angular, que consome a PokeAPI (https://pokeapi.co)
 
 ```bash
   git clone https://github.com/gusteugenio/pokeapp-ionic.git
-  cd pokeapp-ionic
+  cd pokeapp
 ```
 2. Instale as dependências:
 ```bash
