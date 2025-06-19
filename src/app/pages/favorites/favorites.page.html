@@ -1,13 +1,53 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>favorites</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Pokémons Capturados</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">favorites</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div *ngIf="pokemons.length === 0" class="no-favorites-message">
+    <ion-text color="medium">
+      <h2 class="ion-text-center">
+        😢 Nenhum Pokémon foi capturado ainda!
+      </h2>
+      <p class="ion-text-center">
+        "Mesmo o mais forte treinador começa com um único passo..."<br>
+        Vá em busca dos seus Pokémons favoritos e torne-se um Mestre Pokémon! 🧢⚡
+      </p>
+    </ion-text>
+  </div>
+
+  <ion-grid *ngIf="pokemons.length > 0">
+    <ion-row>
+      <ion-col size="6" size-md="3" *ngFor="let p of pokemons">
+        <ion-card>
+          <ion-img [src]="p.sprites?.front_default"></ion-img>
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">{{ p.name | titlecase }}</ion-card-title>
+
+            <ion-button
+              fill="clear"
+              style="position: absolute; top: 0; right: 0;"
+              (click)="toggleFavorite(p.name); $event.stopPropagation()"
+              aria-label="Favoritar Pokémon"
+            >
+              <ion-icon
+                [name]="isFavorite(p.name) ? 'heart' : 'heart-outline'"
+                color="danger"
+              ></ion-icon>
+            </ion-button>
+          </ion-card-header>
+
+          <ion-button expand="block" (click)="goToDetails(p.name)">Ver detalhes</ion-button>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-footer class="ion-padding" *ngIf="pokemons.length > 0">
+    <ion-button expand="block" (click)="prevPage()" [disabled]="!canGoPrev">Anterior</ion-button>
+    <ion-button expand="block" (click)="nextPage()" [disabled]="!canGoNext">Próximo</ion-button>
+  </ion-footer>
 </ion-content>
