@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PokeService } from 'src/app/services/poke.service';
 import { Pokemon } from 'src/app/models/pokemon.model';
+import { FavoriteService } from 'src/app/services/favorite.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +15,11 @@ export class HomePage implements OnInit {
   limit = 20;
   offset = 0;
 
-  constructor(private pokeService: PokeService) {}
+  constructor(
+    private pokeService: PokeService,
+    private favoriteService: FavoriteService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadPokemons();
@@ -35,6 +41,10 @@ export class HomePage implements OnInit {
     });
   }
 
+  goToDetails(name: string) {
+    this.router.navigate(['/details', name]);
+  }
+
   nextPage() {
     this.offset += this.limit;
     this.loadPokemons();
@@ -46,4 +56,13 @@ export class HomePage implements OnInit {
       this.loadPokemons();
     }
   }
+
+  isFavorite(name: string): boolean {
+    return this.favoriteService.isFavorite(name);
+  }
+
+  toggleFavorite(name: string) {
+    this.favoriteService.toggleFavorite(name);
+  }
+
 }

@@ -1,0 +1,50 @@
+.pokemon-img {
+  max-width: 180px;
+  margin: 16px auto;
+  display: block;
+}
+
+.pokemon-card {
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.pokemon-name {
+  font-size: 1.3rem;
+  text-align: center;
+  margin-top: -12px;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.info-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.4;
+}
+
+.pokedex-entry {
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #444;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+ion-chip.info-chip {
+  margin: 4px 4px 0 0;
+  text-transform: capitalize;
+  --background: #eef3fb;
+  --color: #1e1e1e;
+  font-size: 14px;
+}
