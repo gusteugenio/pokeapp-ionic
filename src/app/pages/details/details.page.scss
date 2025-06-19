@@ -1,25 +1,62 @@
-.pokemon-img {
-  max-width: 180px;
-  margin: 16px auto;
-  display: block;
+.poke-header ion-toolbar {
+  --background: #3b4cca;
+  --color: #fff;
+}
+
+.poke-content {
+  --background: #f2f2f7;
+  background-color: #f2f2f7;
 }
 
 .pokemon-card {
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+  background-color: #fff;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.pokemon-image-wrapper {
+  background-color: #e8f0fe;
+  padding: 12px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(100, 150, 255, 0.3);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pokemon-img {
+  max-width: 180px;
+  border-radius: 12px;
+}
+
+.pokemon-info {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
 }
 
 .pokemon-name {
-  font-size: 1.3rem;
-  text-align: center;
-  margin-top: -12px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #e3350d;
+  margin-bottom: 12px;
+  text-align: left;
 }
 
 .info-content {
+  font-size: 16px;
+  color: #444;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  font-size: 16px;
 }
 
 .info-row {
@@ -34,7 +71,7 @@
   font-style: italic;
   font-size: 15px;
   line-height: 1.4;
-  color: #444;
+  color: #555;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
@@ -44,7 +81,31 @@
 ion-chip.info-chip {
   margin: 4px 4px 0 0;
   text-transform: capitalize;
-  --background: #eef3fb;
-  --color: #1e1e1e;
   font-size: 14px;
+  font-weight: 500;
+}
+
+ion-chip.type-chip {
+  --background: #a4c2f4;
+  --color: #1a1a1a;
+}
+
+ion-chip.ability-chip {
+  --background: #ffe599;
+  --color: #1a1a1a;
+}
+
+@media (max-width: 600px) {
+  .pokemon-card {
+    flex-direction: column;
+    padding: 16px 12px;
+  }
+
+  .pokemon-image-wrapper {
+    margin: 0 auto 16px auto;
+  }
+
+  .pokemon-name {
+    text-align: center;
+  }
 }

@@ -1,0 +1,51 @@
+.poke-content {
+  --background: #f2f2f7;
+  background-color: #f2f2f7;
+}
+
+.poke-header ion-toolbar {
+  --background: #3b4cca;
+  --color: #fff;
+}
+
+.poke-button {
+  --background: #e3350d;
+  --color: #fff;
+  margin-bottom: 12px;
+}
+
+.poke-button[disabled] {
+  opacity: 0.6;
+}
+
+.poke-details-button {
+  --background: #ffcc00;
+  --color: #000;
+  margin: 8px;
+  font-weight: bold;
+}
+
+.poke-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  background-color: #ffffff;
+  transition: transform 0.15s ease-in-out;
+}
+
+.poke-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.16);
+}
+
+.poke-name {
+  color: #2d2d2d;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+ion-img {
+  object-fit: contain;
+  height: 120px;
+  background-color: #f9f9f9;
+  border-radius: 12px 12px 0 0;
+}

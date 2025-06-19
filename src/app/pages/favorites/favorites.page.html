@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="poke-header">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="poke-content ion-padding">
   <div *ngIf="pokemons.length === 0" class="no-favorites-message">
     <ion-text color="medium">
       <h2 class="ion-text-center">
@@ -23,10 +23,10 @@
   <ion-grid *ngIf="pokemons.length > 0">
     <ion-row>
       <ion-col size="6" size-md="3" *ngFor="let p of pokemons">
-        <ion-card>
+        <ion-card class="poke-card">
           <ion-img [src]="p.sprites?.front_default"></ion-img>
           <ion-card-header>
-            <ion-card-title class="ion-text-center">{{ p.name | titlecase }}</ion-card-title>
+            <ion-card-title class="ion-text-center poke-name">{{ p.name | titlecase }}</ion-card-title>
 
             <ion-button
               fill="clear"
@@ -41,13 +41,20 @@
             </ion-button>
           </ion-card-header>
 
-          <ion-button expand="block" (click)="goToDetails(p.name)">Ver detalhes</ion-button>
+          <ion-button expand="block" (click)="goToDetails(p.name)" class="poke-details-button">
+            Ver detalhes
+          </ion-button>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
+
   <ion-footer class="ion-padding" *ngIf="pokemons.length > 0">
-    <ion-button expand="block" (click)="prevPage()" [disabled]="!canGoPrev">Anterior</ion-button>
-    <ion-button expand="block" (click)="nextPage()" [disabled]="!canGoNext">Próximo</ion-button>
+    <ion-button expand="block" (click)="prevPage()" [disabled]="!canGoPrev" class="poke-button">
+      Anterior
+    </ion-button>
+    <ion-button expand="block" (click)="nextPage()" [disabled]="!canGoNext" class="poke-button">
+      Próximo
+    </ion-button>
   </ion-footer>
 </ion-content>
