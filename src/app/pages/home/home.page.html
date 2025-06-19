@@ -1,18 +1,26 @@
-<ion-header>
+<ion-header class="poke-header">
   <ion-toolbar>
     <ion-title>Lista de Pokémons</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-button routerLink="/favorites" expand="block" color="primary">Pokémons Capturados (Favoritos)</ion-button>
+<ion-content class="poke-content">
+  <ion-button 
+    routerLink="/favorites" 
+    expand="block" 
+    class="poke-button">
+    Pokémons Capturados (Favoritos)
+  </ion-button>
+
   <ion-grid>
     <ion-row>
       <ion-col size="6" size-md="3" *ngFor="let p of pokemons">
-        <ion-card>
+        <ion-card class="poke-card">
           <ion-img [src]="p.sprites?.front_default"></ion-img>
           <ion-card-header>
-            <ion-card-title class="ion-text-center">{{ p.name | titlecase }}</ion-card-title>
+            <ion-card-title class="ion-text-center poke-name">
+              {{ p.name | titlecase }}
+            </ion-card-title>
             <ion-button
               fill="clear"
               style="position: absolute; top: 0; right: 0;"
@@ -26,14 +34,20 @@
             </ion-button>
           </ion-card-header>
 
-          <ion-button expand="block" (click)="goToDetails(p.name)">Ver detalhes</ion-button>
+          <ion-button expand="block" (click)="goToDetails(p.name)" class="poke-details-button">
+            Ver detalhes
+          </ion-button>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
 
   <ion-footer class="ion-padding">
-    <ion-button expand="block" (click)="prevPage()" [disabled]="offset === 0">Anterior</ion-button>
-    <ion-button expand="block" (click)="nextPage()">Próximo</ion-button>
+    <ion-button expand="block" (click)="prevPage()" [disabled]="offset === 0" class="poke-button">
+      Anterior
+    </ion-button>
+    <ion-button expand="block" (click)="nextPage()" class="poke-button">
+      Próximo
+    </ion-button>
   </ion-footer>
 </ion-content>
