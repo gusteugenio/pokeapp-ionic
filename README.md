@@ -47,6 +47,15 @@ Site construído com Ionic + Angular, que consome a PokeAPI (https://pokeapi.co)
 
 ---
 
+🎞️ GIFs
+
+Os GIFs do projeto estão em `src/assets/gifs` e mostram:
+
+- A paginação da lista de Pokémons
+- A página de detalhes de um Pokémon
+- A página de favoritos
+
+---
 
 ✨ Diferenciais
 
