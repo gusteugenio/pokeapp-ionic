@@ -14,6 +14,7 @@ export class HomePage implements OnInit {
   pokemons: Pokemon[] = [];
   limit = 20;
   offset = 0;
+  totalPokemons = 0;
 
   constructor(
     private pokeService: PokeService,
@@ -25,9 +26,10 @@ export class HomePage implements OnInit {
     this.loadPokemons();
   }
 
-  loadPokemons() {
+    loadPokemons() {
+    this.pokemons = [];
     this.pokeService.getPokemons(this.limit, this.offset).subscribe(response => {
-      this.pokemons = [];
+      this.totalPokemons = response.count;
       response.results.forEach((pokemon: any) => {
         this.pokeService.getPokemonByNameOrId(pokemon.name).subscribe(data => {
           this.pokemons.push({
@@ -46,8 +48,10 @@ export class HomePage implements OnInit {
   }
 
   nextPage() {
-    this.offset += this.limit;
-    this.loadPokemons();
+    if (this.offset + this.limit < this.totalPokemons) {
+      this.offset += this.limit;
+      this.loadPokemons();
+    }
   }
 
   prevPage() {
