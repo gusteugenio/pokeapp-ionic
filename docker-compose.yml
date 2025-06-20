@@ -1,0 +1,8 @@
+services:
+  pokeapp:
+    build: .
+    ports:
+      - "8100:8100"
+    volumes:
+      - .:/app
+    command: ionic serve --host 0.0.0.0 --port 8100
