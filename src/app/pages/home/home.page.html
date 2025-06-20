@@ -5,16 +5,22 @@
 </ion-header>
 
 <ion-content class="poke-content">
-  <ion-button 
-    routerLink="/favorites" 
-    expand="block" 
+  <ion-button
+    routerLink="/favorites"
+    expand="block"
     class="poke-button">
-    Pokémons Capturados (Favoritos)
+    Pokémons Capturados
   </ion-button>
+
+  <ion-searchbar
+    placeholder="Buscar Pokémon (nome ou ID)"
+    (ionInput)="searchPokemon($event)"
+    debounce="500"
+  ></ion-searchbar>
 
   <ion-grid>
     <ion-row>
-      <ion-col size="6" size-md="3" *ngFor="let p of pokemons">
+      <ion-col size="6" size-md="3" *ngFor="let p of displayedPokemons">
         <ion-card class="poke-card">
           <ion-img [src]="p.sprites?.front_default"></ion-img>
           <ion-card-header>
@@ -39,10 +45,14 @@
           </ion-button>
         </ion-card>
       </ion-col>
+
+      <ion-col size="12" *ngIf="displayedPokemons.length === 0 && searchTerm !== ''">
+        <p class="ion-text-center">Pokémon não encontrado. 😢<br> Busque pelo nome exato do Pokémon ou tente procurar por outro termo.</p>
+      </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-footer class="ion-padding">
+  <ion-footer class="ion-padding" *ngIf="!isSearchingSpecificPokemon">
     <ion-button expand="block" (click)="prevPage()" [disabled]="offset === 0" class="poke-button">
       Anterior
     </ion-button>
