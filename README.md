@@ -87,6 +87,7 @@ Os GIFs do projeto estão localizados em `src/assets/gifs` e demonstram:
 - Interface fiel à identidade visual do universo Pokémon.
 - Mensagens customizadas no estilo do anime como feedback ao usuário.
 - Estilo visual consistente e agradável.
+- Cobertura de testes unitários para garantir a estabilidade e o correto funcionamento das funcionalidades.
 - Uso de Webhooks ao favoritar/desfavoritar Pokémon.
 - Ambiente com Docker, permitindo fácil replicação e execução do projeto.
 
