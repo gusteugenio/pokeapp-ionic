@@ -26,7 +26,7 @@ export class HomePage implements OnInit {
     this.loadPokemons();
   }
 
-    loadPokemons() {
+  loadPokemons() {
     this.pokemons = [];
     this.pokeService.getPokemons(this.limit, this.offset).subscribe(response => {
       this.totalPokemons = response.count;
