@@ -9,8 +9,9 @@ const FAVORITES_KEY = 'pokemon_favorites';
 })
 export class FavoriteService {
   private favorites: string[] = [];
-  // Para uso efetivo do webhook, é preciso desativar o CORS.
-  private webhookUrl = 'https://webhook.site/2d5ef690-52b6-4fe3-bb9e-5894697fee19';
+  // Acesse https://webhook.site/ e gere um URL único para receber os dados do webhook.
+  // Para uso efetivo do webhook, é preciso desativar o CORS ao rodar a aplicação.
+  private webhookUrl = 'https://webhook.site/sua-url-aqui';
   public favoritesChanged = new Subject<void>();
 
   constructor(private http: HttpClient) {
