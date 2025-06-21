@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 const FAVORITES_KEY = 'pokemon_favorites';
 
@@ -10,6 +11,7 @@ export class FavoriteService {
   private favorites: string[] = [];
   // Para uso efetivo do webhook, é preciso desativar o CORS.
   private webhookUrl = 'https://webhook.site/2d5ef690-52b6-4fe3-bb9e-5894697fee19';
+  public favoritesChanged = new Subject<void>();
 
   constructor(private http: HttpClient) {
     this.loadFavorites();
@@ -22,6 +24,7 @@ export class FavoriteService {
 
   private saveFavorites() {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(this.favorites));
+    this.favoritesChanged.next();
   }
 
   getFavorites(): string[] {
