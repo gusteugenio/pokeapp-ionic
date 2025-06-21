@@ -10,7 +10,7 @@ Site construído com Ionic + Angular, que consome a [PokeAPI](https://pokeapi.co
 
 ```bash
 git clone https://github.com/gusteugenio/pokeapp-ionic.git
-cd pokeapp
+cd pokeapp-ionic
 ```
 
 ### 2. Com Docker (Recomendado para configuração fácil e ambiente isolado)
