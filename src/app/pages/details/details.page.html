@@ -1,14 +1,16 @@
 <ion-header class="poke-header">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ pokemon?.name | titlecase }}</ion-title>
+    <div class="poke-toolbar-container">
+      <div class="poke-toolbar-left">
+        <ion-back-button defaultHref="/home" class="poke-back-button"></ion-back-button>
+        <span class="poke-list">{{ pokemon?.name | titlecase }}</span>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="pokemon" class="poke-content ion-padding">
-  <ion-card class="pokemon-card">
+  <ion-card class="poke-details-card poke-details-card-type-{{ pokemon.types[0]?.type.name }}">
     <div class="pokemon-image-wrapper">
       <ion-img
         class="pokemon-img"
@@ -16,8 +18,8 @@
       ></ion-img>
     </div>
 
-    <div class="pokemon-info">
-      <ion-card-title class="pokemon-name">
+    <div>
+      <ion-card-title class="ion-text-center poke-name">
         #{{ pokemon.id }} - {{ pokemon.name | titlecase }}
       </ion-card-title>
 
@@ -32,15 +34,15 @@
 
         <div class="info-row">
           <strong>Tipos:</strong>
-          <ion-chip *ngFor="let type of pokemon.types" class="info-chip type-chip">
-            {{ type.type.name }}
+          <ion-chip *ngFor="let type of pokemon.types" class="info-chip poke-chip-type {{type.type.name}}">
+            {{ type.type.name | titlecase }}
           </ion-chip>
         </div>
 
         <div class="info-row">
           <strong>Habilidades:</strong>
-          <ion-chip *ngFor="let ability of pokemon.abilities" class="info-chip ability-chip">
-            {{ ability.ability.name }}
+          <ion-chip *ngFor="let ability of pokemon.abilities" class="info-chip poke-chip-ability">
+            {{ ability.ability.name | titlecase }}
           </ion-chip>
         </div>
 

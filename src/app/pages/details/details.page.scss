@@ -1,111 +1,261 @@
 .poke-header ion-toolbar {
-  --background: #3b4cca;
-  --color: #fff;
+  --background: #CC0000;
+  --color: #FFD60A;
+  font-family: 'Press Start 2P', cursive;
+  letter-spacing: 1px;
+}
+
+.poke-toolbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 4px 8px;
+}
+
+.poke-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.poke-list {
+  font-size: 20px;
+  font-weight: bold;
+  color: #FFCB05;
+}
+
+.poke-back-button {
+  --color: #FFD60A;
+  font-size: 24px;
 }
 
 .poke-content {
-  --background: #f2f2f7;
-  background-color: #f2f2f7;
+  --background: #1B263B;
+  background-color: #1B263B;
+  color: #fff;
 }
 
-.pokemon-card {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
-  padding: 16px;
-  border-radius: 16px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
-  background-color: #fff;
-  align-items: flex-start;
-  flex-wrap: wrap;
+.poke-details-card {
+  border-radius: 12px;
+  background-color: #0a1832;
+  margin-top: 20px;
+  padding-bottom: 15px;
+  color: #ffffff;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.poke-details-card-type-normal {
+  box-shadow: 0 0 25px 8px rgba(168, 167, 122, 0.7);
+}
+
+.poke-details-card-type-fire {
+  box-shadow: 0 0 25px 8px rgba(238, 129, 48, 0.7);
+}
+
+.poke-details-card-type-water {
+  box-shadow: 0 0 25px 8px rgba(99, 144, 240, 0.7);
+}
+
+.poke-details-card-type-electric {
+  box-shadow: 0 0 25px 8px rgba(247, 208, 44, 0.7);
+}
+
+.poke-details-card-type-grass {
+  box-shadow: 0 0 25px 8px rgba(122, 199, 76, 0.7);
+}
+
+.poke-details-card-type-ice {
+  box-shadow: 0 0 25px 8px rgba(150, 217, 214, 0.7);
+}
+
+.poke-details-card-type-fighting {
+  box-shadow: 0 0 25px 8px rgba(194, 46, 40, 0.7);
+}
+
+.poke-details-card-type-poison {
+  box-shadow: 0 0 25px 8px rgba(163, 62, 161, 0.7);
+}
+
+.poke-details-card-type-ground {
+  box-shadow: 0 0 25px 8px rgba(226, 191, 101, 0.7);
+}
+
+.poke-details-card-type-flying {
+  box-shadow: 0 0 25px 8px rgba(169, 143, 243, 0.7);
+}
+
+.poke-details-card-type-psychic {
+  box-shadow: 0 0 25px 8px rgba(249, 85, 135, 0.7);
+}
+
+.poke-details-card-type-bug {
+  box-shadow: 0 0 25px 8px rgba(166, 185, 26, 0.7);
+}
+
+.poke-details-card-type-rock {
+  box-shadow: 0 0 25px 8px rgba(182, 161, 54, 0.7);
+}
+
+.poke-details-card-type-ghost {
+  box-shadow: 0 0 25px 8px rgba(115, 87, 151, 0.7);
+}
+
+.poke-details-card-type-dragon {
+  box-shadow: 0 0 25px 8px rgba(111, 53, 252, 0.7);
+}
+
+.poke-details-card-type-steel {
+  box-shadow: 0 0 25px 8px rgba(183, 183, 206, 0.7);
+}
+
+.poke-details-card-type-dark {
+  box-shadow: 0 0 25px 8px rgba(112, 87, 70, 0.7);
+}
+
+.poke-details-card-type-fairy {
+  box-shadow: 0 0 25px 8px rgba(214, 133, 173, 0.7);
 }
 
 .pokemon-image-wrapper {
-  background-color: #e8f0fe;
-  padding: 12px;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(100, 150, 255, 0.3);
-  flex-shrink: 0;
+  background-color: #212f4c;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  padding: 10px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  min-height: 200px;
 }
 
 .pokemon-img {
-  max-width: 180px;
-  border-radius: 12px;
+  object-fit: contain;
+  max-width: 100%;
+  height: 200px;
 }
 
-.pokemon-info {
-  flex: 1;
-  min-width: 220px;
-  display: flex;
-  flex-direction: column;
-}
-
-.pokemon-name {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #e3350d;
-  margin-bottom: 12px;
-  text-align: left;
+.poke-name {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+  margin-top: 15px;
+  margin-bottom: 10px;
 }
 
 .info-content {
+  padding: 0 16px;
   font-size: 16px;
-  color: #444;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
 }
 
 .info-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.info-row strong {
+  color: #FFCB05;
 }
 
 .pokedex-entry {
   font-style: italic;
   font-size: 15px;
-  line-height: 1.4;
-  color: #555;
-  margin-bottom: 10px;
+  color: #bbbbbb;
+  margin-bottom: 15px;
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 5px;
 }
 
-ion-chip.info-chip {
-  margin: 4px 4px 0 0;
-  text-transform: capitalize;
-  font-size: 14px;
-  font-weight: 500;
+.pokedex-entry ion-icon {
+  color: #FFCB05;
+  font-size: 18px;
+  margin-top: 2px;
 }
 
-ion-chip.type-chip {
-  --background: #a4c2f4;
-  --color: #1a1a1a;
+.info-chip {
+  --background: #457B9D;
+  --color: #fff;
+  font-weight: bold;
+  border-radius: 999px;
+  padding: 4px 10px;
+  margin: 2px;
+  font-size: 13px;
+  text-transform: uppercase;
 }
 
-ion-chip.ability-chip {
-  --background: #ffe599;
-  --color: #1a1a1a;
+.poke-chip-ability {
+  --background: #4CAF50;
 }
 
-@media (max-width: 600px) {
-  .pokemon-card {
-    flex-direction: column;
-    padding: 16px 12px;
-  }
+.poke-chip-type.normal {
+  --background: #A8A77A;
+}
 
-  .pokemon-image-wrapper {
-    margin: 0 auto 16px auto;
-  }
+.poke-chip-type.fire {
+  --background: #EE8130;
+}
 
-  .pokemon-name {
-    text-align: center;
-  }
+.poke-chip-type.water {
+  --background: #6390F0;
+}
+
+.poke-chip-type.electric {
+  --background: #F7D02C;
+}
+
+.poke-chip-type.grass {
+  --background: #7AC74C;
+}
+
+.poke-chip-type.ice {
+  --background: #96D9D6;
+}
+
+.poke-chip-type.fighting {
+  --background: #C22E28;
+}
+
+.poke-chip-type.poison {
+  --background: #A33EA1;
+}
+
+.poke-chip-type.ground {
+  --background: #E2BF65;
+}
+
+.poke-chip-type.flying {
+  --background: #A98FF3;
+}
+
+.poke-chip-type.psychic {
+  --background: #F95587;
+}
+
+.poke-chip-type.bug {
+  --background: #A6B91A;
+}
+
+.poke-chip-type.rock {
+  --background: #B6A136;
+}
+
+.poke-chip-type.ghost {
+  --background: #735797;
+}
+
+.poke-chip-type.dragon {
+  --background: #6F35FC;
+}
+
+.poke-chip-type.steel {
+  --background: #B7B7CE;
+}
+
+.poke-chip-type.dark {
+  --background: #705746;
+}
+
+.poke-chip-type.fairy {
+  --background: #D685AD;
 }

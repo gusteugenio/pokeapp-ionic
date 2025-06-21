@@ -1,31 +1,42 @@
 <ion-header class="poke-header">
   <ion-toolbar>
-    <ion-title>Lista de Pokémons</ion-title>
+    <div class="poke-toolbar-container">
+      <div class="poke-toolbar-left">
+        <img src="assets/img/pokeball.png" alt="Pokébola" class="poke-logo" />
+        <span class="poke-title poke-list">LISTA DE POKEMONS</span>
+      </div>
+
+      <div class="poke-toolbar-right">
+        <ion-searchbar
+          placeholder="Buscar Pokémon"
+          (ionInput)="searchPokemon($event)"
+          debounce="500"
+          class="poke-searchbar"
+        ></ion-searchbar>
+        <div class="poke-yellow-dot"></div>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="poke-content">
-  <ion-button
-    routerLink="/favorites"
-    expand="block"
-    class="poke-button">
-    Pokémons Capturados
-  </ion-button>
-
-  <ion-searchbar
-    placeholder="Buscar Pokémon (nome ou ID)"
-    (ionInput)="searchPokemon($event)"
-    debounce="500"
-  ></ion-searchbar>
+  <div class="poke-chip-container">
+    <a [routerLink]="['/home']" routerLinkActive="active-chip" class="poke-chip" [routerLinkActiveOptions]="{ exact: true }">
+      Todos
+    </a>
+    <a [routerLink]="['/favorites']" routerLinkActive="active-chip" class="poke-chip">
+      Favoritos
+    </a>
+  </div>
 
   <ion-grid>
     <ion-row>
       <ion-col size="6" size-md="3" *ngFor="let p of displayedPokemons">
-        <ion-card class="poke-card">
+        <ion-card class="poke-card poke-card-type-{{ p.types?.[0]?.type?.name }}">
           <ion-img [src]="p.sprites?.front_default"></ion-img>
           <ion-card-header>
             <ion-card-title class="ion-text-center poke-name">
-              {{ p.name | titlecase }}
+              #{{ p.id }}<br>{{ p.name | titlecase }}
             </ion-card-title>
             <ion-button
               fill="clear"
@@ -47,7 +58,7 @@
       </ion-col>
 
       <ion-col size="12" *ngIf="displayedPokemons.length === 0 && searchTerm !== ''">
-        <p class="ion-text-center">Pokémon não encontrado. 😢<br> Busque pelo nome exato do Pokémon ou tente procurar por outro termo.</p>
+        <p class="ion-text-center error-search">Pokémon não encontrado. 😢<br> Busque pelo nome exato do Pokémon, ID ou tente procurar por outro termo.</p>
       </ion-col>
     </ion-row>
   </ion-grid>

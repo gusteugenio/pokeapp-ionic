@@ -1,32 +1,48 @@
 <ion-header class="poke-header">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Pokémons Capturados</ion-title>
+    <div class="poke-toolbar-container">
+      <div class="poke-toolbar-left">
+        <img src="assets/img/pokeball.png" alt="Pokébola" class="poke-logo" />
+        <span class="poke-title poke-list">LISTA DE POKEMONS</span>
+      </div>
+      <div class="poke-toolbar-right">
+        <div class="poke-yellow-dot"></div>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="poke-content ion-padding">
-  <div *ngIf="pokemons.length === 0" class="no-favorites-message">
+<ion-content class="poke-content">
+  <div class="poke-chip-container">
+    <a [routerLink]="['/home']" routerLinkActive="active-chip" class="poke-chip" [routerLinkActiveOptions]="{ exact: true }">
+      Todos
+    </a>
+    <a [routerLink]="['/favorites']" routerLinkActive="active-chip" class="poke-chip">
+      Favoritos
+    </a>
+  </div>
+
+  <div *ngIf="displayedPokemons.length === 0" class="no-favorites-message">
     <ion-text color="medium">
-      <h2 class="ion-text-center">
+      <h2 class="ion-text-center error-search">
         😢 Nenhum Pokémon foi capturado ainda!
       </h2>
-      <p class="ion-text-center">
+      <p class="ion-text-center error-search">
         "Mesmo o mais forte treinador começa com um único passo..."<br>
         Vá em busca dos seus Pokémons favoritos e torne-se um Mestre Pokémon! 🧢⚡
       </p>
     </ion-text>
   </div>
 
-  <ion-grid *ngIf="pokemons.length > 0">
+  <ion-grid *ngIf="displayedPokemons.length > 0">
     <ion-row>
-      <ion-col size="6" size-md="3" *ngFor="let p of pokemons">
-        <ion-card class="poke-card">
+      <ion-col size="6" size-md="3" *ngFor="let p of displayedPokemons">
+        <ion-card class="poke-card poke-card-type-{{ p.types?.[0]?.type?.name }}">
           <ion-img [src]="p.sprites?.front_default"></ion-img>
           <ion-card-header>
-            <ion-card-title class="ion-text-center poke-name">{{ p.name | titlecase }}</ion-card-title>
+            <ion-card-title class="ion-text-center poke-name">
+              #{{ p.id }}<br>{{ p.name | titlecase }}
+            </ion-card-title>
 
             <ion-button
               fill="clear"
@@ -49,7 +65,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-footer class="ion-padding" *ngIf="pokemons.length > 0">
+  <ion-footer class="ion-padding" *ngIf="displayedPokemons.length > 0">
     <ion-button expand="block" (click)="prevPage()" [disabled]="!canGoPrev" class="poke-button">
       Anterior
     </ion-button>

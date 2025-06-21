@@ -1,51 +1,216 @@
 .poke-content {
-  --background: #f2f2f7;
-  background-color: #f2f2f7;
+  --background: #1B263B;
+  background-color: #1B263B;
+  color: #fff;
 }
 
 .poke-header ion-toolbar {
-  --background: #3b4cca;
-  --color: #fff;
+  --background: #CC0000;
+  --color: #FFD60A;
+  font-family: 'Press Start 2P', cursive;
+  letter-spacing: 1px;
+}
+
+.poke-list {
+  font-size: 22px;
+  font-weight: bold;
+  color: #FFCB05;
 }
 
 .poke-button {
-  --background: #e3350d;
+  --background: #CC0000;
   --color: #fff;
-  margin-bottom: 12px;
-}
-
-.poke-button[disabled] {
-  opacity: 0.6;
-}
-
-.poke-details-button {
-  --background: #ffcc00;
-  --color: #000;
-  margin: 8px;
   font-weight: bold;
+  font-family: 'Press Start 2P', cursive;
+  letter-spacing: 1px;
+  margin: 12px 0;
+}
+
+ion-footer .poke-button {
+  --background: #457B9D;
 }
 
 .poke-card {
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  background-color: #ffffff;
-  transition: transform 0.15s ease-in-out;
+  background-color: #0a1832;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .poke-card:hover {
   transform: scale(1.03);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.16);
+}
+
+.poke-card-type-normal {
+  box-shadow: 0 0 15px rgba(168, 167, 122, 0.7);
+}
+
+.poke-card-type-fire {
+  box-shadow: 0 0 15px rgba(238, 129, 48, 0.7);
+}
+
+.poke-card-type-water {
+  box-shadow: 0 0 15px rgba(99, 144, 240, 0.7);
+}
+
+.poke-card-type-electric {
+  box-shadow: 0 0 15px rgba(247, 208, 44, 0.7);
+}
+
+.poke-card-type-grass {
+  box-shadow: 0 0 15px rgba(122, 199, 76, 0.7);
+}
+
+.poke-card-type-ice {
+  box-shadow: 0 0 15px rgba(150, 217, 214, 0.7);
+}
+
+.poke-card-type-fighting {
+  box-shadow: 0 0 15px rgba(194, 46, 40, 0.7);
+}
+
+.poke-card-type-poison {
+  box-shadow: 0 0 15px rgba(163, 62, 161, 0.7);
+}
+
+.poke-card-type-ground {
+  box-shadow: 0 0 15px rgba(226, 191, 101, 0.7);
+}
+
+.poke-card-type-flying {
+  box-shadow: 0 0 15px rgba(169, 143, 243, 0.7);
+}
+
+.poke-card-type-psychic {
+  box-shadow: 0 0 15px rgba(249, 85, 135, 0.7);
+}
+
+.poke-card-type-bug {
+  box-shadow: 0 0 15px rgba(166, 185, 26, 0.7);
+}
+
+.poke-card-type-rock {
+  box-shadow: 0 0 15px rgba(182, 161, 54, 0.7);
+}
+
+.poke-card-type-ghost {
+  box-shadow: 0 0 15px rgba(115, 87, 151, 0.7);
+}
+
+.poke-card-type-dragon {
+  box-shadow: 0 0 15px rgba(111, 53, 252, 0.7);
+}
+
+.poke-card-type-steel {
+  box-shadow: 0 0 15px rgba(183, 183, 206, 0.7);
+}
+
+.poke-card-type-dark {
+  box-shadow: 0 0 15px rgba(112, 87, 70, 0.7);
+}
+
+.poke-card-type-fairy {
+  box-shadow: 0 0 15px rgba(214, 133, 173, 0.7);
 }
 
 .poke-name {
-  color: #2d2d2d;
+  color: #ffffff;
   font-weight: bold;
-  margin-top: 4px;
+  font-size: 16px;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.poke-details-button {
+  --background: #FFCB05;
+  --color: #000;
+  margin: 8px;
+  font-weight: bold;
+  font-size: 17px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 ion-img {
   object-fit: contain;
-  height: 120px;
-  background-color: #f9f9f9;
-  border-radius: 12px 12px 0 0;
+  height: 130px;
+  background-color: #212f4c;
+}
+
+ion-card-header ion-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  background: transparent;
+}
+
+.poke-toolbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 4px 8px;
+}
+
+.poke-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.poke-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.poke-yellow-dot {
+  width: 20px;
+  height: 20px;
+  background-color: #FFCB05;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #FFD60A;
+}
+
+.poke-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: 7px;
+}
+
+.poke-yellow-dot {
+  width: 15px;
+  height: 15px;
+  background-color: #FFCB05;
+  border-radius: 50%;
+}
+
+.error-search {
+  color: #ffffff;
+}
+
+.poke-chip-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.poke-chip {
+  padding: 6px 16px;
+  border: 2px solid #FFCB05;
+  border-radius: 999px;
+  color: #FFCB05;
+  font-weight: bold;
+  font-family: 'Press Start 2P', cursive;
+  background-color: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out, color 0.2s;
+}
+
+.poke-chip.active-chip {
+  background-color: #FFCB05;
+  color: #000;
 }
