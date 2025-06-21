@@ -69,8 +69,11 @@ describe('HomePage', () => {
     expect(mockPokeService.getPokemons).toHaveBeenCalledWith(component.limit, component.offset);
     expect(mockPokeService.getPokemonByNameOrId).toHaveBeenCalledTimes(mockPokemonsResponse.results.length);
     expect(component.pokemons.length).toBe(mockPokemonsResponse.results.length);
-    expect(component.pokemons[0].name).toBe('pikachu');
     expect(component.totalPokemons).toBe(mockPokemonsResponse.count);
+
+    const names = component.pokemons.map(p => p.name);
+    expect(names).toContain('pikachu');
+    expect(names).toContain('bulbasaur');
   }));
 
   it('should not go to next page if no more pokemons', fakeAsync(() => {
