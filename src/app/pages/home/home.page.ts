@@ -22,7 +22,7 @@ export class HomePage implements OnInit {
   constructor(
     private pokeService: PokeService,
     private favoriteService: FavoriteService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -40,11 +40,7 @@ export class HomePage implements OnInit {
 
       response.results.forEach((pokemon: any) => {
         this.pokeService.getPokemonByNameOrId(pokemon.name).subscribe(data => {
-          this.pokemons.push({
-            name: data.name,
-            id: data.id,
-            sprites: data.sprites
-          });
+          this.pokemons.push(data);
           loadedCount++;
 
           if (loadedCount === totalToLoad) {
@@ -72,11 +68,7 @@ export class HomePage implements OnInit {
 
     this.pokeService.getPokemonByNameOrId(term).subscribe(
       data => {
-        this.displayedPokemons = [{
-          name: data.name,
-          id: data.id,
-          sprites: data.sprites
-        }];
+        this.displayedPokemons = [data];
       },
       error => {
         this.displayedPokemons = [];
