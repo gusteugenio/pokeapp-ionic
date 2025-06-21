@@ -25,7 +25,10 @@ describe('DetailsPage', () => {
             front_default: 'https://example.com/pikachu.png'
           }
         }
-      }
+      },
+      types: [
+        { slot: 1, type: { name: 'electric' } }
+      ]
     })),
     getPokemonSpecies: jasmine.createSpy('getPokemonSpecies').and.returnValue(of({
       flavor_text_entries: [
@@ -45,6 +48,8 @@ describe('DetailsPage', () => {
 
     fixture = TestBed.createComponent(DetailsPage);
     component = fixture.componentInstance;
+
+    await fixture.whenStable();
     fixture.detectChanges();
   });
 

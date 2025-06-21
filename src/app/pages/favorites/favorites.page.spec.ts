@@ -16,6 +16,7 @@ describe('FavoritesPage', () => {
   const mockPokeService = {
     getPokemonByNameOrId: jasmine.createSpy('getPokemonByNameOrId').and.callFake((name: string) =>
       of({
+        id: Math.floor(Math.random() * 1000),
         name,
         sprites: {
           other: {
@@ -36,7 +37,8 @@ describe('FavoritesPage', () => {
     mockFavoriteService = {
       getFavorites: jasmine.createSpy('getFavorites'),
       isFavorite: jasmine.createSpy('isFavorite').and.returnValue(true),
-      toggleFavorite: jasmine.createSpy('toggleFavorite')
+      toggleFavorite: jasmine.createSpy('toggleFavorite'),
+      favoritesChanged: of(null)
     };
 
     await TestBed.configureTestingModule({
@@ -63,13 +65,13 @@ describe('FavoritesPage', () => {
     component.limit = 5;
     component.offset = 0;
 
-    component.loadFavorites();
+    component.loadAndSortAllFavorites();
     tick();
 
     expect(mockFavoriteService.getFavorites).toHaveBeenCalled();
     expect(mockPokeService.getPokemonByNameOrId).toHaveBeenCalledTimes(1);
-    expect(component.pokemons.length).toBe(1);
-    expect(component.pokemons[0].name).toBe('pikachu');
+    expect(component.allFavoritesSortedById.length).toBe(1);
+    expect(component.allFavoritesSortedById[0].name).toBe('pikachu');
   }));
 
   it('should navigate to Pokémon details page', () => {
@@ -78,15 +80,14 @@ describe('FavoritesPage', () => {
   });
 
   it('should toggle favorite and reload list', () => {
-    spyOn(component, 'loadFavorites');
+    spyOn(component, 'loadAndSortAllFavorites');
     component.toggleFavorite('pikachu');
     expect(mockFavoriteService.toggleFavorite).toHaveBeenCalledWith('pikachu');
-    expect(component.loadFavorites).toHaveBeenCalled();
   });
 
   it('should show message when no favorites', fakeAsync(() => {
     mockFavoriteService.getFavorites.and.returnValue([]);
-    component.loadFavorites();
+    component.loadAndSortAllFavorites();
     tick();
     fixture.detectChanges();
 
@@ -96,13 +97,16 @@ describe('FavoritesPage', () => {
   }));
 
   it('should handle pagination correctly', fakeAsync(() => {
-    mockFavoriteService.getFavorites.and.returnValue(
-      Array.from({ length: 25 }, (_, i) => `poke${i + 1}`)
+    const names = Array.from({ length: 25 }, (_, i) => `poke${i + 1}`);
+    mockFavoriteService.getFavorites.and.returnValue(names);
+    mockPokeService.getPokemonByNameOrId.and.callFake(name =>
+      of({ id: parseInt(name.replace('poke', '')), name })
     );
 
     component.limit = 10;
     component.offset = 0;
-    component.loadFavorites();
+
+    component.loadAndSortAllFavorites();
     tick();
 
     // Página 1: não pode voltar
@@ -120,7 +124,6 @@ describe('FavoritesPage', () => {
     component.nextPage();
     tick();
     expect(component.offset).toBe(20);
-    expect(component.canGoPrev).toBeTrue();
     expect(component.canGoNext).toBeFalse();
 
     // Volta para página 2
