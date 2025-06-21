@@ -52,7 +52,7 @@ A aplicação estará disponível em [http://localhost:8100](http://localhost:81
 - Estrutura baseada em componentes e serviços independentes (separação de responsabilidades).
 - Comunicação com a API utilizando `HttpClient` com injeção de dependência.
 - Tela inicial com lista paginada de Pokémons para melhor performance e UX.
-- Funcionalidade de "capturar" (favoritar) Pokémons, com listagem em tela específica.
+- Funcionalidade de favoritar Pokémons, com listagem em tela específica. 
 - Página de detalhes com altura, peso, tipos, habilidades e entrada da Pokédex.
 - Design inspirado na estética da franquia Pokémon (vermelho, amarelo e azul).
 - Utilização mínima de bibliotecas externas para manter o desempenho alto.
@@ -79,6 +79,7 @@ Os GIFs do projeto estão localizados em `src/assets/gifs` e demonstram:
 - Paginação da lista de Pokémons
 - Tela de detalhes de um Pokémon
 - Tela de favoritos
+- Busca de Pokémon
 
 ---
 
@@ -87,6 +88,8 @@ Os GIFs do projeto estão localizados em `src/assets/gifs` e demonstram:
 - Interface fiel à identidade visual do universo Pokémon.
 - Mensagens customizadas no estilo do anime como feedback ao usuário.
 - Estilo visual consistente e agradável.
+- Funcionalidade de busca por nome ou id de Pokémon.
+- Cor de cards de acordo com tipo principal do Pokémon.
 - Cobertura de testes unitários para garantir a estabilidade e o correto funcionamento das funcionalidades.
 - Uso de Webhooks ao favoritar/desfavoritar Pokémon.
 - Ambiente com Docker, permitindo fácil replicação e execução do projeto.
