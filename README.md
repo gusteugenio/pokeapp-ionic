@@ -54,6 +54,7 @@ A aplicação estará disponível em [http://localhost:8100](http://localhost:81
 - Tela inicial com lista paginada de Pokémons para melhor performance e UX.
 - Funcionalidade de favoritar Pokémons, com listagem em tela específica. 
 - Página de detalhes com altura, peso, tipos, habilidades e entrada da Pokédex.
+- Gráfico de Status: Na tela de detalhes, um gráfico de radar exibe os atributos do Pokémon.
 - Design inspirado na estética da franquia Pokémon (vermelho, amarelo e azul).
 - Utilização mínima de bibliotecas externas para manter o desempenho alto.
 - Responsivo e adaptado a diferentes dispositivos e orientações de tela.
@@ -62,11 +63,26 @@ A aplicação estará disponível em [http://localhost:8100](http://localhost:81
 
 ---
 
+## 🏆 Área do Treinador
+Uma área dedicada para o usuário se sentir parte do universo Pokémon!
+
+- Perfil Personalizado: O usuário pode definir seu nome e gênero, escolhendo entre os avatares de Ash e Serena.
+- Sistema de Níveis: A jornada do treinador é recompensada com um sistema de progressão.
+- Progressão: A cada 5 Pokémons capturados (favoritados), o treinador sobe 1 nível.
+- Nível Máximo: O desafio vai até o nível 50.
+- Status: A área exibe o total de Pokémons capturados e quantos faltam para o próximo nível.
+- Badges: O nível atual é representado por badges (Bronze, Prata e Ouro) que mudam conforme o progresso.
+- Motivação: Mensagens personalizadas são exibidas para encorajar o treinador de acordo com seu nível atual.
+- Progresso Total: Uma barra de progresso mostra a porcentagem para atingir o Nível Máximo.
+
+---
+
 ## 🛠️ Tecnologias usadas
 
 - [Ionic Framework](https://ionicframework.com/)
 - [Angular](https://angular.io/)
 - [PokeAPI](https://pokeapi.co)
+- [Chart.js](https://www.chartjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Docker](https://www.docker.com/)
 
@@ -77,9 +93,11 @@ A aplicação estará disponível em [http://localhost:8100](http://localhost:81
 Os GIFs do projeto estão localizados em [`src/assets/gifs`](https://github.com/gusteugenio/pokeapp-ionic/tree/main/src/assets/gifs) e demonstram:
 
 - Paginação da lista de Pokémons
+- Filtragem por tipos
 - Tela de detalhes de um Pokémon
 - Tela de favoritos
 - Busca de Pokémon
+- Área do Treinador e sistema de níveis
 
 ---
 
@@ -88,7 +106,8 @@ Os GIFs do projeto estão localizados em [`src/assets/gifs`](https://github.com/
 - Interface fiel à identidade visual do universo Pokémon.
 - Mensagens customizadas no estilo do anime como feedback ao usuário.
 - Estilo visual consistente e agradável.
-- Funcionalidade de busca por nome ou id de Pokémon.
+- Funcionalidade de busca por nome ou id.
+- Filtro por tipo de Pokémon.
 - Cor de cards de acordo com tipo principal do Pokémon.
 - Cobertura de testes unitários para garantir a estabilidade e o correto funcionamento das funcionalidades.
 - Uso de Webhooks ao favoritar/desfavoritar Pokémon.
