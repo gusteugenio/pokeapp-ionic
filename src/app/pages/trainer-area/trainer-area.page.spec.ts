@@ -3,6 +3,8 @@ import { AlertController } from '@ionic/angular';
 import { TrainerAreaPage } from './trainer-area.page';
 import { Subject } from 'rxjs';
 import { FavoriteService } from 'src/app/services/favorite.service';
+import { BehaviorSubject } from 'rxjs';
+import { TrainerService } from 'src/app/services/trainer.service';
 
 describe('TrainerAreaPage', () => {
   let component: TrainerAreaPage;
@@ -14,15 +16,25 @@ describe('TrainerAreaPage', () => {
     getFavorites: jasmine.createSpy('getFavorites').and.returnValue([]),
   };
 
+  const trainerLevelSubject = new BehaviorSubject<number>(0);
+
+  const trainerServiceMock = {
+    trainerLevel$: trainerLevelSubject.asObservable(),
+    getTrainerGender: () => 'male',
+    getTrainerName: () => 'Ash',
+    setTrainerGender: jasmine.createSpy('setTrainerGender'),
+  };
+
   beforeEach(async () => {
     const alertSpy = jasmine.createSpyObj('AlertController', ['create']);
-    alertSpy.create.and.returnValue(Promise.resolve({ present: jasmine.createSpy('present') }));
+    alertSpy.create.and.returnValue(Promise.resolve({ present: jasmine.createSpy('present') } as any));
 
     await TestBed.configureTestingModule({
       declarations: [TrainerAreaPage],
       providers: [
         { provide: AlertController, useValue: alertSpy },
         { provide: FavoriteService, useValue: favoriteServiceMock },
+        { provide: TrainerService, useValue: trainerServiceMock },
       ],
     }).compileComponents();
 
@@ -30,6 +42,7 @@ describe('TrainerAreaPage', () => {
     component = fixture.componentInstance;
     alertControllerSpy = TestBed.inject(AlertController) as jasmine.SpyObj<AlertController>;
   });
+
 
   it('should create component', () => {
     expect(component).toBeTruthy();
@@ -46,5 +59,45 @@ describe('TrainerAreaPage', () => {
   it('should present gender selection alert', async () => {
     await component.presentGenderSelection();
     expect(alertControllerSpy.create).toHaveBeenCalled();
+
+    const alert = await alertControllerSpy.create.calls.mostRecent().returnValue;
+    expect(alert.present).toHaveBeenCalled();
   });
+
+  it('should display bronze medal for levels 1 to 15', async () => {
+    trainerLevelSubject.next(10);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const el = fixture.nativeElement;
+    expect(el.querySelector('.badge-bronze')).toBeTruthy();
+    expect(el.querySelector('.badge-bronze')?.textContent).toContain('🥉 Bronze');
+    expect(el.querySelector('.badge-silver')).toBeNull();
+    expect(el.querySelector('.badge-gold')).toBeNull();
+  });
+
+  it('should display silver medal for levels 16 to 25', async () => {
+    trainerLevelSubject.next(20);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const el = fixture.nativeElement;
+    expect(el.querySelector('.badge-silver')).toBeTruthy();
+    expect(el.querySelector('.badge-silver')?.textContent).toContain('🥈 Prata');
+    expect(el.querySelector('.badge-bronze')).toBeNull();
+    expect(el.querySelector('.badge-gold')).toBeNull();
+  });
+
+  it('should display gold medal for levels above 25', async () => {
+    trainerLevelSubject.next(30);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const el = fixture.nativeElement;
+    expect(el.querySelector('.badge-gold')).toBeTruthy();
+    expect(el.querySelector('.badge-gold')?.textContent).toContain('🥇 Ouro');
+    expect(el.querySelector('.badge-bronze')).toBeNull();
+    expect(el.querySelector('.badge-silver')).toBeNull();
+  });
+
 });

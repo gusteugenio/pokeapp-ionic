@@ -30,13 +30,16 @@
     <ion-img [src]="trainerImageUrl" alt="Imagem do Treinador" class="trainer-image"></ion-img>
 
     <ion-card-header>
-      <ion-card-title class="ion-text-center poke-name">Seu Perfil de Treinador</ion-card-title>
+      <ion-card-title class="ion-text-center poke-name">{{ trainerName }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-content class="trainer-stats">
       <p>
         <strong>Nível Atual: </strong>
         <span class="trainer-level-text">{{ trainerLevel }}</span> / {{ maxLevel }}
+      </p>
+      <p *ngIf="trainerLevel < maxLevel">
+        <strong>Pokémon(s) para atingir o próximo nível: </strong>{{ pokemonsForNextLevel }}
       </p>
       <p>
         <strong>Pokémon Capturados:</strong> {{ capturedPokemonsCount }}
@@ -46,6 +49,16 @@
         <div class="progress-fill" [style.width.%]="(trainerLevel / maxLevel) * 100"></div>
       </div>
       <p class="progress-text">{{ (trainerLevel / maxLevel) * 100 | number:'1.0-0' }}% do Nível Máximo</p>
+
+
+      <div class="badges">
+        <div *ngIf="trainerLevel >= 1 && trainerLevel <= 15" class="badge badge-bronze">🥉 Bronze</div>
+        <div *ngIf="trainerLevel >= 16 && trainerLevel <= 25" class="badge badge-silver">🥈 Prata</div>
+        <div *ngIf="trainerLevel > 25" class="badge badge-gold">🥇 Ouro</div>
+      </div>
+
+      <p class="motivation">{{ motivationalMessage }}</p>
     </ion-card-content>
+
   </div>
 </ion-content>
