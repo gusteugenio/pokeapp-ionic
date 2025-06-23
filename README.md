@@ -74,7 +74,7 @@ A aplicação estará disponível em [http://localhost:8100](http://localhost:81
 
 ## 🎞️ GIFs
 
-Os GIFs do projeto estão localizados em `src/assets/gifs` e demonstram:
+Os GIFs do projeto estão localizados em [`src/assets/gifs`](https://github.com/gusteugenio/pokeapp-ionic/tree/main/src/assets/gifs) e demonstram:
 
 - Paginação da lista de Pokémons
 - Tela de detalhes de um Pokémon
