@@ -1,9 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { FavoriteService } from './favorite.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TrainerService } from './trainer.service';
 
 describe('FavoriteService', () => {
   let service: FavoriteService;
+  let trainerMock: TrainerService;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
@@ -15,6 +17,7 @@ describe('FavoriteService', () => {
 
   beforeEach(() => {
     service = TestBed.inject(FavoriteService);
+    trainerMock = TestBed.inject(TrainerService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -28,7 +31,7 @@ describe('FavoriteService', () => {
 
   it('should load favorites from localStorage on creation', () => {
     localStorage.setItem('pokemon_favorites', JSON.stringify(['pikachu']));
-    service = new FavoriteService(TestBed.inject(HttpTestingController) as any);
+    service = new FavoriteService(httpMock as any, trainerMock as any);
 
     expect(service.getFavorites()).toEqual(['pikachu']);
   });

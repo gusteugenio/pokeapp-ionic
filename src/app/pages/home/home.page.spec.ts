@@ -17,6 +17,15 @@ describe('HomePage', () => {
     ],
   };
 
+  const mockTypesResponse = {
+    count: 3,
+    results: [
+      { name: 'fire', url: 'url-fire' },
+      { name: 'water', url: 'url-water' },
+      { name: 'grass', url: 'url-grass' },
+    ],
+  };
+
   const mockPokeService = {
     getPokemons: jasmine.createSpy('getPokemons').and.returnValue(of(mockPokemonsResponse)),
     getPokemonByNameOrId: jasmine.createSpy('getPokemonByNameOrId').and.callFake((name: string) =>
@@ -26,6 +35,7 @@ describe('HomePage', () => {
         sprites: { front_default: `url-to-${name}.png` },
       })
     ),
+    getAllTypes: jasmine.createSpy('getAllTypes').and.returnValue(of(mockTypesResponse)),
   };
 
   const mockFavoriteService = {
@@ -56,6 +66,7 @@ describe('HomePage', () => {
   beforeEach(() => {
     mockPokeService.getPokemons.calls.reset();
     mockPokeService.getPokemonByNameOrId.calls.reset();
+    mockPokeService.getAllTypes.calls.reset();
   });
 
   it('should create the component', () => {
@@ -66,6 +77,7 @@ describe('HomePage', () => {
     component.ngOnInit();
     tick();
 
+    expect(mockPokeService.getAllTypes).toHaveBeenCalled();
     expect(mockPokeService.getPokemons).toHaveBeenCalledWith(component.limit, component.offset);
     expect(mockPokeService.getPokemonByNameOrId).toHaveBeenCalledTimes(mockPokemonsResponse.results.length);
     expect(component.pokemons.length).toBe(mockPokemonsResponse.results.length);
@@ -74,6 +86,11 @@ describe('HomePage', () => {
     const names = component.pokemons.map(p => p.name);
     expect(names).toContain('pikachu');
     expect(names).toContain('bulbasaur');
+
+    const typeNames = component.allTypes.map(t => t.name);
+    expect(typeNames).toContain('fire');
+    expect(typeNames).toContain('water');
+    expect(typeNames).toContain('grass');
   }));
 
   it('should not go to next page if no more pokemons', fakeAsync(() => {

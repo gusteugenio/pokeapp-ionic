@@ -1,6 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { PokeService } from './poke.service';
+import { PokemonListResponse } from '../models/pokemon-list-response.model';
+import { Pokemon } from '../models/pokemon.model';
+import { PokemonSpecies } from '../models/pokemon-species.model';
 
 describe('PokeService', () => {
   let service: PokeService;
@@ -25,12 +28,14 @@ describe('PokeService', () => {
   });
 
   it('should retrieve a list of pokemons', () => {
-    const mockPokemons = {
+    const mockPokemons: PokemonListResponse = {
+      count: 2,
+      next: null,
+      previous: null,
       results: [
         { name: 'bulbasaur', url: '...' },
         { name: 'charmander', url: '...' }
-      ],
-      count: 2
+      ]
     };
     const limit = 2;
     const offset = 0;
@@ -46,11 +51,23 @@ describe('PokeService', () => {
   });
 
   it('should retrieve a pokemon by name or id', () => {
-    const mockPokemon = {
-      name: 'pikachu',
+    const mockPokemon: Pokemon = {
       id: 25,
-      sprites: { front_default: 'some-url' }
+      name: 'pikachu',
+      sprites: { front_default: 'some-url' },
+      types: [
+        { type: { name: 'electric' } }
+      ],
+      stats: [
+        { base_stat: 35, stat: { name: 'hp' } },
+        { base_stat: 55, stat: { name: 'attack' } },
+        { base_stat: 40, stat: { name: 'defense' } },
+        { base_stat: 50, stat: { name: 'special-attack' } },
+        { base_stat: 50, stat: { name: 'special-defense' } },
+        { base_stat: 90, stat: { name: 'speed' } }
+      ]
     };
+
     const nameOrId = 'pikachu';
 
     service.getPokemonByNameOrId(nameOrId).subscribe(pokemon => {
@@ -63,9 +80,13 @@ describe('PokeService', () => {
   });
 
   it('should retrieve pokemon species by name', () => {
-    const mockSpecies = {
-      name: 'pikachu',
-      habitat: { name: 'forest' }
+    const mockSpecies: PokemonSpecies = {
+      flavor_text_entries: [
+        {
+          flavor_text: "Quando exposto ao calor, ele armazena energia elétrica nas bochechas.",
+        }
+      ],
+      language: { name: 'en' }
     };
     const name = 'pikachu';
 
