@@ -224,3 +224,51 @@ ion-card-header ion-button {
   background-color: #FFCB05;
   color: #000;
 }
+
+.type-filter-item-minimal {
+  --background: transparent;
+  --color: #fff;
+  --highlight-color-focused: transparent;
+  --border-width: 0 !important;
+  --inner-border-width: 0 !important;
+  width: auto;
+  max-width: 180px;
+  padding: 0;
+  margin: 0;
+}
+
+.type-filter-item-minimal ion-select {
+  --color: #fff;
+  --padding-start: 10px;
+  --padding-end: 10px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-shadow: none;
+  min-height: auto;
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #fff;
+  font-size: 1.1em;
+  margin-top: 20px;
+  text-align: center;
+
+  ion-spinner {
+    color: #ffcb05;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
+  }
+}
