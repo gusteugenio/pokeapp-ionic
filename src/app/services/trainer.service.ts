@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 const TRAINER_LEVEL_KEY = 'trainer_level';
 const TRAINER_GENDER_KEY = 'trainer_gender';
+const TRAINER_NAME_KEY = 'trainer_name';
 const POKEMONS_FOR_LEVEL_UP = 5;
 const MAX_TRAINER_LEVEL = 50;
 
@@ -45,6 +46,10 @@ export class TrainerService {
       return gender;
     }
     return null;
+  }
+
+  getTrainerName(): string | null {
+    return localStorage.getItem(TRAINER_NAME_KEY);
   }
 
   setTrainerGender(gender: 'male' | 'female') {

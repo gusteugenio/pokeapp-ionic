@@ -94,7 +94,7 @@
   padding: 16px;
   box-shadow: 0 0 12px rgba(255, 203, 5, 0.2);
   max-width: 500px;
-  margin: 20px auto;
+  margin: 30px auto;
 
   display: flex;
   flex-direction: column;
@@ -152,6 +152,42 @@
   font-weight: bold;
   text-align: center;
   margin-top: 6px;
+}
+
+.badges {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.badge {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: white;
+  user-select: none;
+}
+
+.badge-bronze {
+  background-color: #935518;
+}
+
+.badge-silver {
+  background-color: #c0c0c0;
+  color: #333;
+}
+
+.badge-gold {
+  background-color: #ffd700;
+  color: #333;
+}
+
+.motivation {
+  text-align: center;
+  font-style: italic;
+  margin-top: 8px;
+  color: #666;
 }
 
 @media (max-width: 480px) {
