@@ -195,6 +195,8 @@ ion-card-header ion-button {
   justify-content: center;
   gap: 12px;
   margin: 12px 0;
+  padding: 0 8px;
+  flex-wrap: wrap;
 }
 
 .poke-chip {
@@ -213,4 +215,29 @@ ion-card-header ion-button {
 .poke-chip.active-chip {
   background-color: #FFCB05;
   color: #000;
+}
+
+@media (max-width: 480px) {
+  .poke-chip-container {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    gap: 12px;
+    padding: 0 12px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .poke-chip-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .poke-chip {
+    flex: 0 0 auto;
+    min-width: max-content;
+  }
+
+  .poke-yellow-dot {
+    display: none;
+  }
 }
