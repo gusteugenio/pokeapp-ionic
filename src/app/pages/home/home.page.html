@@ -25,11 +25,16 @@
       Todos
     </a>
     <a [routerLink]="['/favorites']" routerLinkActive="active-chip" class="poke-chip">
-      Favoritos
+      Capturados
+    </a>
+    <a [routerLink]="['/trainer-area']" routerLinkActive="active-chip" class="poke-chip">
+      Área do Treinador
     </a>
   </div>
 
-  <div class="type-filter-container-minimal"> <ion-item class="type-filter-item-minimal"> <ion-select interface="popover" placeholder="Todos os Tipos" [(ngModel)]="selectedType" (ionChange)="onTypeChange($event)">
+  <div class="type-filter-container-minimal">
+    <ion-item class="type-filter-item-minimal">
+      <ion-select interface="popover" placeholder="Todos os Tipos" [(ngModel)]="selectedType" (ionChange)="onTypeChange($event)">
         <ion-select-option value="all">Todos os Tipos</ion-select-option>
         <ion-select-option *ngFor="let type of allTypes" [value]="type.name">
           {{ type.name | titlecase }}
@@ -37,6 +42,7 @@
       </ion-select>
     </ion-item>
   </div>
+
   <div *ngIf="isLoadingPokemons" class="loading-spinner">
     <ion-spinner name="crescent"></ion-spinner>
     <p>Carregando Pokémon...</p>
@@ -71,7 +77,9 @@
       </ion-col>
 
       <ion-col size="12" *ngIf="!isLoadingPokemons && displayedPokemons.length === 0 && (searchTerm !== '' || selectedType !== 'all')">
-        <p class="ion-text-center error-search">Nenhum Pokémon encontrado para a sua busca ou filtro. 😢</p>
+        <p class="ion-text-center error-search">
+          Pokémon não encontrado. 😢<br> Busque pelo nome exato do Pokémon, ID ou tente procurar por outro termo.
+        </p>
       </ion-col>
     </ion-row>
   </ion-grid>

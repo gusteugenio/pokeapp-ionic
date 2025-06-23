@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'favorites',
     loadChildren: () => import('./pages/favorites/favorites.module').then( m => m.FavoritesPageModule)
   },
+  {
+    path: 'trainer-area',
+    loadChildren: () => import('./pages/trainer-area/trainer-area.module').then( m => m.TrainerAreaPageModule)
+  },
 ];
 
 @NgModule({

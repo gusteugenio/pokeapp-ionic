@@ -1,0 +1,51 @@
+<ion-header class="poke-header">
+  <ion-toolbar>
+    <div class="poke-toolbar-container">
+      <div class="poke-toolbar-left">
+        <img src="assets/img/pokeball.png" alt="Pokébola" class="poke-logo" />
+        <span class="poke-title poke-list">ÁREA DO TREINADOR</span>
+      </div>
+      <div class="poke-toolbar-right">
+        <div class="poke-yellow-dot"></div>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="poke-content">
+
+  <div class="poke-chip-container">
+    <a [routerLink]="['/home']" routerLinkActive="active-chip" class="poke-chip" [routerLinkActiveOptions]="{ exact: true }">
+      Todos
+    </a>
+    <a [routerLink]="['/favorites']" routerLinkActive="active-chip" class="poke-chip">
+      Capturados
+    </a>
+    <a [routerLink]="['/trainer-area']" routerLinkActive="active-chip" class="poke-chip">
+      Área do Treinador
+    </a>
+  </div>
+
+  <div class="trainer-area-card">
+    <ion-img [src]="trainerImageUrl" alt="Imagem do Treinador" class="trainer-image"></ion-img>
+
+    <ion-card-header>
+      <ion-card-title class="ion-text-center poke-name">Seu Perfil de Treinador</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="trainer-stats">
+      <p>
+        <strong>Nível Atual: </strong>
+        <span class="trainer-level-text">{{ trainerLevel }}</span> / {{ maxLevel }}
+      </p>
+      <p>
+        <strong>Pokémon Capturados:</strong> {{ capturedPokemonsCount }}
+      </p>
+
+      <div class="level-progress-bar">
+        <div class="progress-fill" [style.width.%]="(trainerLevel / maxLevel) * 100"></div>
+      </div>
+      <p class="progress-text">{{ (trainerLevel / maxLevel) * 100 | number:'1.0-0' }}% do Nível Máximo</p>
+    </ion-card-content>
+  </div>
+</ion-content>
