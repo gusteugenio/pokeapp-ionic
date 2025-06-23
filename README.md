@@ -52,7 +52,7 @@ A aplicação estará disponível em [http://localhost:8100](http://localhost:81
 - Estrutura baseada em componentes e serviços independentes (separação de responsabilidades).
 - Comunicação com a API utilizando `HttpClient` com injeção de dependência.
 - Tela inicial com lista paginada de Pokémons para melhor performance e UX.
-- Funcionalidade de favoritar Pokémons, com listagem em tela específica. 
+- Funcionalidade de capturar (favoritar) Pokémons, com listagem em tela específica. 
 - Página de detalhes com altura, peso, tipos, habilidades e entrada da Pokédex.
 - Gráfico de Status: Na tela de detalhes, um gráfico exibe os atributos do Pokémon.
 - Design inspirado na estética da franquia Pokémon (vermelho, amarelo e azul).
@@ -68,7 +68,7 @@ Uma área dedicada para o usuário se sentir parte do universo Pokémon!
 
 - Perfil Personalizado: O usuário pode definir seu nome e gênero, escolhendo entre os avatares de Ash e Serena.
 - Sistema de Níveis: A jornada do treinador é recompensada com um sistema de progressão.
-- Progressão: A cada 5 Pokémons capturados (favoritados), o treinador sobe 1 nível.
+- Progressão: A cada 5 Pokémons capturados, o treinador sobe 1 nível.
 - Nível Máximo: O desafio vai até o nível 50.
 - Status: A área exibe o total de Pokémons capturados e quantos faltam para o próximo nível.
 - Badges: O nível atual é representado por badges (Bronze, Prata e Ouro) que mudam conforme o progresso.
@@ -94,9 +94,9 @@ Os GIFs do projeto estão localizados em [`src/assets/gifs`](https://github.com/
 
 - Paginação da lista de Pokémons
 - Filtragem por tipos
-- Tela de detalhes de um Pokémon
-- Tela de favoritos
 - Busca de Pokémon
+- Tela de detalhes de um Pokémon
+- Tela de capturados
 - Área do Treinador e sistema de níveis
 
 ---
