@@ -15,9 +15,9 @@ export class DetailsPage implements OnInit {
   pokemon: any = null;
   description: string = '';
 
-  public barChartLabels: string[] = ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'];
+  public barChartLabels: string[] = ['HP', 'Ataque', 'Defesa', 'Ataque Especial', 'Defesa Especial', 'Velocidade'];
   public barChartData: ChartConfiguration<'bar'>['data'] = {
-    labels: ['HP', 'Attack', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed'],
+    labels: ['HP', 'Ataque', 'Defesa', 'Ataque Especial', 'Defesa Especial', 'Velocidade'],
     datasets: [
       {
         data: [],
