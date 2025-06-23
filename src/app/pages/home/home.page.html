@@ -29,6 +29,19 @@
     </a>
   </div>
 
+  <div class="type-filter-container-minimal"> <ion-item class="type-filter-item-minimal"> <ion-select interface="popover" placeholder="Todos os Tipos" [(ngModel)]="selectedType" (ionChange)="onTypeChange($event)">
+        <ion-select-option value="all">Todos os Tipos</ion-select-option>
+        <ion-select-option *ngFor="let type of allTypes" [value]="type.name">
+          {{ type.name | titlecase }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+  <div *ngIf="isLoadingPokemons" class="loading-spinner">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando Pokémon...</p>
+  </div>
+
   <ion-grid>
     <ion-row>
       <ion-col size="6" size-md="3" *ngFor="let p of displayedPokemons">
@@ -57,17 +70,17 @@
         </ion-card>
       </ion-col>
 
-      <ion-col size="12" *ngIf="displayedPokemons.length === 0 && searchTerm !== ''">
-        <p class="ion-text-center error-search">Pokémon não encontrado. 😢<br> Busque pelo nome exato do Pokémon, ID ou tente procurar por outro termo.</p>
+      <ion-col size="12" *ngIf="!isLoadingPokemons && displayedPokemons.length === 0 && (searchTerm !== '' || selectedType !== 'all')">
+        <p class="ion-text-center error-search">Nenhum Pokémon encontrado para a sua busca ou filtro. 😢</p>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-footer class="ion-padding" *ngIf="!isSearchingSpecificPokemon">
-    <ion-button expand="block" (click)="prevPage()" [disabled]="offset === 0" class="poke-button">
+  <ion-footer class="ion-padding" *ngIf="!isSearchingSpecificPokemon && !isLoadingPokemons">
+    <ion-button expand="block" (click)="prevPage()" [disabled]="!canGoPrev" class="poke-button">
       Anterior
     </ion-button>
-    <ion-button expand="block" (click)="nextPage()" class="poke-button">
+    <ion-button expand="block" (click)="nextPage()" [disabled]="!canGoNext" class="poke-button">
       Próximo
     </ion-button>
   </ion-footer>
