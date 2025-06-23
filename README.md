@@ -54,7 +54,7 @@ A aplicação estará disponível em [http://localhost:8100](http://localhost:81
 - Tela inicial com lista paginada de Pokémons para melhor performance e UX.
 - Funcionalidade de favoritar Pokémons, com listagem em tela específica. 
 - Página de detalhes com altura, peso, tipos, habilidades e entrada da Pokédex.
-- Gráfico de Status: Na tela de detalhes, um gráfico de radar exibe os atributos do Pokémon.
+- Gráfico de Status: Na tela de detalhes, um gráfico exibe os atributos do Pokémon.
 - Design inspirado na estética da franquia Pokémon (vermelho, amarelo e azul).
 - Utilização mínima de bibliotecas externas para manter o desempenho alto.
 - Responsivo e adaptado a diferentes dispositivos e orientações de tela.
@@ -109,6 +109,7 @@ Os GIFs do projeto estão localizados em [`src/assets/gifs`](https://github.com/
 - Funcionalidade de busca por nome ou id.
 - Filtro por tipo de Pokémon.
 - Cor de cards de acordo com tipo principal do Pokémon.
+- Área do Treinador.
 - Cobertura de testes unitários para garantir a estabilidade e o correto funcionamento das funcionalidades.
 - Uso de Webhooks ao favoritar/desfavoritar Pokémon.
 - Ambiente com Docker, permitindo fácil replicação e execução do projeto.
