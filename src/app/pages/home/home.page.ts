@@ -41,7 +41,6 @@ export class HomePage implements OnInit {
       this.allTypes = response.results.filter(type =>
         type.name !== 'shadow' && type.name !== 'unknown' && type.name !== 'stellar'
       );
-      this.allTypes.unshift({ name: 'all', url: '' });
     });
   }
 

@@ -3,7 +3,7 @@
     <div class="poke-toolbar-container">
       <div class="poke-toolbar-left">
         <img src="assets/img/pokeball.png" alt="Pokébola" class="poke-logo" />
-        <span class="poke-title poke-list">LISTA DE POKEMONS</span>
+        <span class="poke-title poke-list">POKEMONS CAPTURADOS</span>
       </div>
       <div class="poke-toolbar-right">
         <div class="poke-yellow-dot"></div>
@@ -18,7 +18,10 @@
       Todos
     </a>
     <a [routerLink]="['/favorites']" routerLinkActive="active-chip" class="poke-chip">
-      Favoritos
+      Capturados
+    </a>
+    <a [routerLink]="['/trainer-area']" routerLinkActive="active-chip" class="poke-chip">
+      Área do Treinador
     </a>
   </div>
 

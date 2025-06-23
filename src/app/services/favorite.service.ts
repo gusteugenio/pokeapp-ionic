@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { TrainerService } from './trainer.service';
 
 const FAVORITES_KEY = 'pokemon_favorites';
 
@@ -14,8 +15,12 @@ export class FavoriteService {
   private webhookUrl = 'https://webhook.site/sua-url-aqui';
   public favoritesChanged = new Subject<void>();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private trainerService: TrainerService
+  ) {
     this.loadFavorites();
+    this.trainerService.levelUp(this.favorites.length);
   }
 
   private loadFavorites() {
@@ -26,6 +31,7 @@ export class FavoriteService {
   private saveFavorites() {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(this.favorites));
     this.favoritesChanged.next();
+    this.trainerService.levelUp(this.favorites.length);
   }
 
   getFavorites(): string[] {
