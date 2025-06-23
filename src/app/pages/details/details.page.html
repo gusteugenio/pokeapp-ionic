@@ -47,6 +47,55 @@
         </div>
 
         <div class="info-row"><strong>Experiência base:</strong> {{ pokemon.base_experience }}</div>
+        <div class="stats-chart-container">
+          <canvas
+            baseChart
+            [data]="barChartData"
+            [type]="'bar'"
+            [options]="{
+              responsive: true,
+              maintainAspectRatio: false,
+              indexAxis: 'y',
+              scales: {
+                x: {
+                  min: 0,
+                  max: 200,
+                  ticks: {
+                    color: '#fff'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.1)'
+                  }
+                },
+                y: {
+                  ticks: {
+                    color: '#fff'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.1)'
+                  }
+                }
+              },
+              plugins: {
+                legend: {
+                  position: 'top',
+                  labels: {
+                    color: '#ffcb05',
+                    font: {
+                      size: 14
+                    }
+                  }
+                },
+                tooltip: {
+                  enabled: true,
+                  backgroundColor: '#3b4cca',
+                  titleColor: '#fff',
+                  bodyColor: '#fff'
+                }
+              }
+            }"
+          ></canvas>
+        </div>
       </ion-card-content>
     </div>
   </ion-card>
