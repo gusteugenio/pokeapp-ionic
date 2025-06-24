@@ -55,17 +55,14 @@
 Testes garantem que funcionalidades-chave, como o sistema de favoritos, funcionem corretamente e que mudanças futuras não quebrem o app.
 
 ```ts
-it('should toggle favorite: remove if already favorite', () => {
+it('should toggle favorite correctly', () => {
   service.addFavorite('pikachu');
-  const reqAdd = httpMock.expectOne(service['webhookUrl']);
-  reqAdd.flush({});
+  expect(JSON.parse(localStorage.getItem('pokemon_favorites')!)).toContain('pikachu');
+  expect(service.isFavorite('pikachu')).toBeTrue();
 
   service.toggleFavorite('pikachu');
+  expect(JSON.parse(localStorage.getItem('pokemon_favorites')!)).not.toContain('pikachu');
   expect(service.isFavorite('pikachu')).toBeFalse();
-
-  const reqRemove = httpMock.expectOne(service['webhookUrl']);
-  expect(reqRemove.request.body.event).toBe('unfavorited');
-  reqRemove.flush({});
 });
 ```
 
