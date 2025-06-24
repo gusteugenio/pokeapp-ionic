@@ -13,6 +13,7 @@ import { PokemonListResponse } from 'src/app/models/pokemon-list-response.model'
 })
 export class HomePage implements OnInit {
   pokemons: Pokemon[] = [];
+  allPokemonNames: string[] = [];
   displayedPokemons: Pokemon[] = [];
   limit = 20;
   offset = 0;
@@ -32,6 +33,9 @@ export class HomePage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.pokeService.getPokemons(10000, 0).subscribe(response => {
+      this.allPokemonNames = response.results.map(p => p.name);
+    });
     this.loadTypes();
     this.loadPokemons();
   }
@@ -125,9 +129,8 @@ export class HomePage implements OnInit {
 
   searchPokemon(event: any) {
     const term = event.detail.value.trim().toLowerCase();
-    this.searchTerm = term;
 
-    if (term === '') {
+    if (!term) {
       this.isSearchingSpecificPokemon = false;
       this.displayedPokemons = this.pokemons.slice(this.offset, this.offset + this.limit);
       return;
@@ -135,14 +138,15 @@ export class HomePage implements OnInit {
 
     this.isSearchingSpecificPokemon = true;
 
-    this.pokeService.getPokemonByNameOrId(term).subscribe(
-      data => {
-        this.displayedPokemons = [data];
-      },
-      error => {
-        this.displayedPokemons = [];
-      }
-    );
+    const filteredNames = this.allPokemonNames.filter(name => name.includes(term));
+
+    this.displayedPokemons = [];
+
+    filteredNames.forEach(name => {
+      this.pokeService.getPokemonByNameOrId(name).subscribe(data => {
+        this.displayedPokemons.push(data);
+      });
+    });
   }
 
   goToDetails(name: string) {
