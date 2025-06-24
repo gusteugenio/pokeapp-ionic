@@ -192,13 +192,11 @@
 
 @media (max-width: 480px) {
   .poke-chip-container {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    overflow-x: auto;
-    gap: 12px;
-    padding: 0 12px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-x: unset;
+    padding: 0 8px;
+    gap: 8px;
   }
 
   .poke-chip-container::-webkit-scrollbar {
@@ -207,7 +205,7 @@
 
   .poke-chip {
     flex: 0 0 auto;
-    min-width: max-content;
+    min-width: unset;
   }
 
   .poke-yellow-dot {
