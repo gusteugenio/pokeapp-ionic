@@ -1,8 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { TrainerService } from './trainer.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
+// Atenção: Ao descomentar o uso do webhook, os testes irão falhar se esperar por alguma chamada.
 describe('TrainerService', () => {
   let service: TrainerService;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
     spyOn(localStorage, 'getItem').and.callFake((key: string) => {
@@ -12,8 +15,12 @@ describe('TrainerService', () => {
     });
     spyOn(localStorage, 'setItem').and.callFake(() => {});
 
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule]
+    });
+
     service = TestBed.inject(TrainerService);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   it('should be created', () => {
