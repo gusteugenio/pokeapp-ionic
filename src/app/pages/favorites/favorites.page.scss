@@ -112,12 +112,29 @@ ion-footer .poke-button {
   box-shadow: 0 0 15px rgba(214, 133, 173, 0.7);
 }
 
-.poke-name {
-  color: #ffffff;
-  font-weight: bold;
-  font-size: 16px;
+.poke-title-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
   text-align: center;
+  padding: 4px 8px;
+}
+
+.poke-id {
+  color: #fff;
   font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+}
+
+.poke-name {
+  color: #fff;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 .poke-details-button {
@@ -219,13 +236,11 @@ ion-card-header ion-button {
 
 @media (max-width: 480px) {
   .poke-chip-container {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    overflow-x: auto;
-    gap: 12px;
-    padding: 0 12px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-x: unset;
+    padding: 0 8px;
+    gap: 8px;
   }
 
   .poke-chip-container::-webkit-scrollbar {
@@ -234,7 +249,7 @@ ion-card-header ion-button {
 
   .poke-chip {
     flex: 0 0 auto;
-    min-width: max-content;
+    min-width: unset;
   }
 
   .poke-yellow-dot {

@@ -54,9 +54,10 @@
         <ion-card class="poke-card poke-card-type-{{ p.types?.[0]?.type?.name }}">
           <ion-img [src]="p.sprites?.front_default"></ion-img>
           <ion-card-header>
-            <ion-card-title class="ion-text-center poke-name">
-              #{{ p.id }}<br>{{ p.name | titlecase }}
-            </ion-card-title>
+            <div class="poke-title-wrapper">
+              <div class="poke-id">#{{ p.id }}</div>
+              <div class="poke-name">{{ p.name | titlecase }}</div>
+            </div>
             <ion-button
               fill="clear"
               style="position: absolute; top: 0; right: 0;"
