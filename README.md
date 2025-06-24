@@ -1,4 +1,3 @@
-
 <h1 align="center">📱 Pokedex App</h1>
 
 <p align="center">
@@ -22,6 +21,7 @@
 ![Docker](https://img.shields.io/badge/Docker-0db7ed?style=for-the-badge&logo=docker&logoColor=white)
 ![Chart.js](https://img.shields.io/badge/Chart.js-ff6384?style=for-the-badge&logo=chartdotjs&logoColor=white)
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-121013?style=for-the-badge&logo=github&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
 
 </div>
 
@@ -29,14 +29,15 @@
 
 ## ✨ Destaques do Projeto
 
-- 🔁 Paginação e busca dinâmica de Pokémons
+- 🔁 Paginação e busca dinâmica de Pokémons (inclusive por partes do nome, como "char" → "charmander" e outros resultados)
 - ⭐ Favoritar (capturar) Pokémons com armazenamento local
 - 📊 Tela de detalhes com gráfico de status via Chart.js
 - 🧠 Área do Treinador com sistema de níveis, badges e progresso
 - 🌐 Deploy contínuo via GitHub Pages
 - 🧪 Testes unitários para funcionalidades chave
-- 🔗 Integração com Webhooks para eventos de favoritar/desfavoritar
+- 🔗 Integração com Webhooks para eventos de favoritar/desfavoritar e mudança de nível
 - 🐳 Ambiente pronto para Docker
+- 🖥️ Backend com Node.js (Express + CORS) gerando logs em `logs.txt` a cada evento
 
 ---
 
@@ -50,7 +51,7 @@
 
 ---
 
-## 🧪 Testes Unitários (Exemplo)
+## 🧪 Testes Unitários
 Testes garantem que funcionalidades-chave, como o sistema de favoritos, funcionem corretamente e que mudanças futuras não quebrem o app.
 
 ```ts
@@ -81,26 +82,76 @@ cd pokeapp-ionic
 
 ### 🔹 2. Usando Docker (Recomendado)
 
+Executa tanto o frontend quanto o backend (servidor Express) de forma integrada:
+
 ```bash
 docker-compose up --build
 ```
 
+A aplicação estará disponível em: [http://localhost:8100](http://localhost:8100)
 
 ### 🔹 3. Manualmente (sem Docker)
+
+Para executar apenas o frontend, rode os seguintes comandos:
 
 ```bash
 npm install
 ionic serve
 ```
 
-Acesse [http://localhost:8100](http://localhost:8100)
+Para executar ambos os serviços (frontend e backend) em paralelo, execute:
 
+```bash
+npm install
+npm run start-log
+```
+
+Isso executará dois serviços em paralelo com `concurrently`:  
+- O frontend (via `ionic serve`)  
+- O backend Express (via `node backend/server.js`)
+
+A aplicação estará disponível em: [http://localhost:8100](http://localhost:8100)
+
+---
+
+## 📡 Webhooks
+
+> O projeto envia eventos para um servidor backend local (Node.js + Express) sempre que um Pokémon for favoritado/desfavoritado ou quando o nível do treinador for alterado.
+
+### Como usar os webhooks localmente
+
+1. **Descomente a variável `webhookUrl` e as linhas com `this.http.post(this.webhookUrl, ...)` nos arquivos `favorite.service.ts` e `trainer.service.ts`**.
+3. Com o Docker, **descomente a chamada para a imagem do serviço backend no arquivo `docker-compose.yml`**.
+2. Certifique-se de que o backend está rodando (via Docker ou `npm run start-log`).
+3. O arquivo `backend/logs.txt` será gerado e atualizado automaticamente com mensagens formatadas, como:
+
+```
+O treinador Gustavo aumentou o nível: 1 → 2
+Pokémon pikachu foi favoritado pelo treinador Gustavo
+```
+
+### Exemplo de payload enviado:
+
+```ts
+this.http.post(this.webhookUrl, {
+  event: 'favorited',
+  pokemon: name,
+  trainerName: this.trainerService.getTrainerName(),
+  trainerGender: this.trainerService.getTrainerGender()
+}).subscribe();
+```
+
+> 💡 A URL padrão do webhook local é: `http://localhost:3000/webhook`  
+> 💬 Se for usar [https://webhook.site](https://webhook.site), altere a URL e desative CORS via proxy ou extensão.
+
+### Importante:
+Essas chamadas estão comentadas por padrão. Para produção (GitHub Pages), mantenha assim. Para rodar localmente, **descomente** e rode o backend.
 
 ---
 
 ## 🏆 Área do Treinador
 
-> Uma experiência gamificada no estilo Pokémon para o usuário
+> Uma experiência gamificada no estilo Pokémon para o usuário.
 
 - 👤 Escolha de nome e gênero (Ash ou Serena)
 - 🧱 Progressão com níveis a cada 5 capturas
@@ -113,21 +164,6 @@ Acesse [http://localhost:8100](http://localhost:8100)
 ## 📊 Gráfico de Atributos
 
 Na página de detalhes, os status do Pokémon são exibidos visualmente com cores personalizadas de acordo com o tipo.
-
----
-
-## 📡 Webhooks
-
-Ao favoritar/desfavoritar um Pokémon, um evento é disparado para um endpoint externo via `HttpClient`:
-
-```ts
-this.http.post(this.webhookUrl, {
-  pokemon: name,
-  event: 'favorited' | 'unfavorited'
-}).subscribe();
-```
-
-> ⚠️ Para testes, use [https://webhook.site/](https://webhook.site) e desative o CORS ou use um proxy.
 
 ---
 
