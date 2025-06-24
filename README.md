@@ -51,6 +51,7 @@
 ---
 
 ## 🧪 Testes Unitários (Exemplo)
+Testes garantem que funcionalidades-chave, como o sistema de favoritos, funcionem corretamente e que mudanças futuras não quebrem o app.
 
 ```ts
 it('should toggle favorite: remove if already favorite', () => {
@@ -150,4 +151,4 @@ Confira os GIFs da aplicação na pasta [`src/assets/gifs`](https://github.com/g
 
 ---
 
-<p align="center"><strong>Feito com 💛 por um fã de Pokémon e de código limpo!</strong></p>
+<p align="center"><strong>Feito com 💙 por um fã de Pokémon e da arte de programar!</strong></p>
