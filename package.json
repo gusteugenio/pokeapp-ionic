@@ -10,7 +10,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "deploy": "gh-pages -d www --repo https://github.com/gusteugenio/pokeapp-ionic.git"
+    "deploy": "gh-pages -d www --repo https://github.com/gusteugenio/pokeapp-ionic.git",
+    "start-log": "concurrently \"npm run backend\" \"ionic serve\"",
+    "backend": "node backend/server.js"
   },
   "private": true,
   "dependencies": {
@@ -29,6 +31,8 @@
     "@capacitor/status-bar": "7.0.1",
     "@ionic/angular": "^8.0.0",
     "chart.js": "^3.9.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
     "ionicons": "^7.0.0",
     "ng2-charts": "^3.1.2",
     "rxjs": "~7.8.0",
@@ -50,6 +54,7 @@
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
+    "concurrently": "^9.2.0",
     "eslint": "^9.16.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsdoc": "^48.2.1",
