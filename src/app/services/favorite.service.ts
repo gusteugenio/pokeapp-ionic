@@ -10,9 +10,8 @@ const FAVORITES_KEY = 'pokemon_favorites';
 })
 export class FavoriteService {
   private favorites: string[] = [];
-  // Acesse https://webhook.site/ e gere um URL único para receber os dados do webhook.
-  // Para uso efetivo do webhook, é preciso desativar o CORS ao rodar a aplicação.
-  private webhookUrl = 'https://webhook.site/sua-url-aqui';
+  // Descomente as chamadas ao rodar localmente.
+  // private webhookUrl = 'http://localhost:3000/webhook';
   public favoritesChanged = new Subject<void>();
 
   constructor(
@@ -46,14 +45,22 @@ export class FavoriteService {
     if (!this.isFavorite(name)) {
       this.favorites.push(name);
       this.saveFavorites();
-      this.http.post(this.webhookUrl, { pokemon: name, event: 'favorited' }).subscribe();
+      // this.http.post(this.webhookUrl, {
+      //   event: 'favorited',
+      //   pokemon: name,
+      //   trainerName: this.trainerService.getTrainerName()
+      // }).subscribe();
     }
   }
 
   removeFavorite(name: string) {
     this.favorites = this.favorites.filter(f => f !== name);
     this.saveFavorites();
-    this.http.post(this.webhookUrl, { pokemon: name, event: 'unfavorited' }).subscribe();
+    // this.http.post(this.webhookUrl, {
+    //   event: 'unfavorited',
+    //   pokemon: name,
+    //   trainerName: this.trainerService.getTrainerName()
+    // }).subscribe();
   }
 
   toggleFavorite(name: string) {

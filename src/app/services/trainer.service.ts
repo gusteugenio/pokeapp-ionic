@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 const TRAINER_LEVEL_KEY = 'trainer_level';
 const TRAINER_GENDER_KEY = 'trainer_gender';
@@ -13,8 +14,10 @@ const MAX_TRAINER_LEVEL = 50;
 export class TrainerService {
   private trainerLevelSubject = new BehaviorSubject<number>(0);
   public trainerLevel$: Observable<number> = this.trainerLevelSubject.asObservable();
+  // Descomente as chamadas ao rodar localmente.
+  // private webhookUrl = 'http://localhost:3000/webhook';
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.loadTrainerLevel();
   }
 
@@ -25,9 +28,30 @@ export class TrainerService {
   }
 
   private saveTrainerLevel(level: number) {
+    // const previousLevel = this.trainerLevelSubject.value;
     const levelToSave = Math.min(level, MAX_TRAINER_LEVEL);
+
     localStorage.setItem(TRAINER_LEVEL_KEY, levelToSave.toString());
     this.trainerLevelSubject.next(levelToSave);
+
+    // let eventType: 'level_up' | 'level_down' | null = null;
+    // if (levelToSave > previousLevel) {
+    //   eventType = 'level_up';
+    // } else if (levelToSave < previousLevel) {
+    //   eventType = 'level_down';
+    // }
+
+    // if (eventType !== null) {
+    //   const payload = {
+    //     event: eventType,
+    //     trainerName: this.getTrainerName(),
+    //     trainerGender: this.getTrainerGender(),
+    //     fromLevel: previousLevel,
+    //     toLevel: levelToSave
+    //   };
+
+    //   this.http.post(this.webhookUrl, payload).subscribe();
+    // }
   }
 
   levelUp(favoritedCount: number) {
