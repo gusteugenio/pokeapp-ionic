@@ -234,6 +234,26 @@ ion-card-header ion-button {
   color: #000;
 }
 
+.clear-favorites-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 12px 8px 0;
+}
+
+.clear-favorites-icon {
+  --padding-start: 0;
+  --padding-end: 0;
+  --icon-size: 20px;
+  font-size: 20px;
+  color: #FF6B6B;
+  transition: transform 0.2s ease-in-out;
+}
+
+.clear-favorites-icon:hover {
+  transform: scale(1.2);
+  color: #ff3b3b;
+}
+
 @media (max-width: 480px) {
   .poke-chip-container {
     flex-wrap: wrap;

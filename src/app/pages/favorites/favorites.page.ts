@@ -12,6 +12,7 @@ import { forkJoin, Observable } from 'rxjs';
   standalone: false,
 })
 export class FavoritesPage implements OnInit {
+  favoriteNames: [] = [];
   allFavoritesSortedById: Pokemon[] = [];
   displayedPokemons: Pokemon[] = [];
   limit = 12;
@@ -101,6 +102,10 @@ export class FavoritesPage implements OnInit {
 
   toggleFavorite(name: string) {
     this.favoriteService.toggleFavorite(name);
+  }
+
+  clearAllFavorites() {
+    this.favoriteService.clearFavorites();
   }
 
   get canGoNext(): boolean {
