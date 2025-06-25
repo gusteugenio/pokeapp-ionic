@@ -134,6 +134,7 @@ export class HomePage implements OnInit {
     const term = event.detail.value.trim().toLowerCase();
     this.searchTerm = term;
 
+    // Remove pontos e outros caracteres.
     if (!term || /^[^a-z0-9]+$/i.test(term)) {
       this.isSearchingSpecificPokemon = false;
       this.offset = 0;
@@ -150,31 +151,53 @@ export class HomePage implements OnInit {
     this.isSearchingSpecificPokemon = true;
     this.isLoadingPokemons = true;
 
-    const filteredNames = this.allPokemonNames.filter(name => name.includes(term));
-    this.searchResults = [];
-    this.displayedPokemons = [];
-    let loaded = 0;
-
-    if (filteredNames.length === 0) {
-      this.isLoadingPokemons = false;
-      this.totalPokemons = 0;
-      return;
-    }
-
-    filteredNames.forEach(name => {
-      this.pokeService.getPokemonByNameOrId(name).subscribe(data => {
-        this.searchResults.push(data);
-        loaded++;
-
-        if (loaded === filteredNames.length) {
+    // Número - ID.
+    if (/^\d+$/.test(term)) {
+      this.pokeService.getPokemonByNameOrId(term).subscribe({
+        next: data => {
+          this.searchResults = [data];
+          this.totalPokemons = 1;
+          this.displayedPokemons = this.searchResults.slice(0, this.limit);
           this.isLoadingPokemons = false;
-          this.totalPokemons = this.searchResults.length;
-          this.searchResults.sort((a, b) => (a.id ?? 0) - (b.id ?? 0));
-          this.displayedPokemons = this.searchResults.slice(this.offset, this.offset + this.limit);
+        },
+        error: () => {
+          this.searchResults = [];
+          this.totalPokemons = 0;
+          this.displayedPokemons = [];
+          this.isLoadingPokemons = false;
         }
       });
-    });
+    } else {
+      const filteredNames = this.allPokemonNames.filter(name => name.includes(term));
+      this.searchResults = [];
+      this.displayedPokemons = [];
+      let loaded = 0;
 
+      if (filteredNames.length === 0) {
+        this.isLoadingPokemons = false;
+        this.totalPokemons = 0;
+        return;
+      }
+
+      filteredNames.forEach(name => {
+        this.pokeService.getPokemonByNameOrId(name).subscribe(data => {
+          this.searchResults.push(data);
+          loaded++;
+
+          if (loaded === filteredNames.length) {
+            this.isLoadingPokemons = false;
+            this.totalPokemons = this.searchResults.length;
+            this.searchResults.sort((a, b) => (a.id ?? 0) - (b.id ?? 0));
+            this.displayedPokemons = this.searchResults.slice(this.offset, this.offset + this.limit);
+          }
+        }, error => {
+          loaded++;
+          if (loaded === filteredNames.length) {
+            this.isLoadingPokemons = false;
+          }
+        });
+      });
+    }
   }
 
   goToDetails(name: string) {
