@@ -124,6 +124,7 @@ export class HomePage implements OnInit {
     this.selectedType = event.detail.value;
     this.searchTerm = '';
     this.isSearchingSpecificPokemon = false;
+    this.offset = 0;
     this.loadPokemons(true);
   }
 
@@ -134,6 +135,11 @@ export class HomePage implements OnInit {
     if (!term) {
       this.isSearchingSpecificPokemon = false;
       this.displayedPokemons = this.pokemons;
+      if (this.selectedType === 'all') {
+        this.loadPokemons(false);
+      } else {
+        this.applyLocalPagination();
+      }
       return;
     }
 
