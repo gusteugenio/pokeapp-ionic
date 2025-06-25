@@ -85,7 +85,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-footer class="ion-padding" *ngIf="!isSearchingSpecificPokemon && !isLoadingPokemons">
+  <ion-footer class="ion-padding" *ngIf="!isLoadingPokemons && totalPokemons > limit">
     <ion-button expand="block" (click)="prevPage()" [disabled]="!canGoPrev" class="poke-button">
       Anterior
     </ion-button>
