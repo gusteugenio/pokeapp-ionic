@@ -70,4 +70,13 @@ export class FavoriteService {
       this.addFavorite(name);
     }
   }
+
+  clearFavorites() {
+    this.favorites = [];
+    this.saveFavorites();
+    // this.http.post(this.webhookUrl, {
+    //   event: 'favorites_cleared',
+    //   trainerName: this.trainerService.getTrainerName()
+    // }).subscribe();
+  }
 }

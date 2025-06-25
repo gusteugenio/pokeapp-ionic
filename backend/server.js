@@ -49,6 +49,10 @@ app.post('/webhook', (req, res) => {
       mensagem = `Pokémon ${pokemon} foi desfavoritado ${preposicao} ${papel} ${nome}`;
       break;
 
+    case 'favorites_cleared':
+      mensagem = `Todos os pokémons foram desfavoritados ${preposicao} ${papel} ${nome}`;
+      break;
+
     default:
       mensagem = `Evento desconhecido: ${JSON.stringify(req.body)}`;
   }

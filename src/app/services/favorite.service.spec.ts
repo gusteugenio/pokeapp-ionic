@@ -57,4 +57,16 @@ describe('FavoriteService', () => {
     expect(JSON.parse(localStorage.getItem('pokemon_favorites')!)).not.toContain('pikachu');
     expect(service.isFavorite('pikachu')).toBeFalse();
   });
+
+  it('should clear all favorites', () => {
+    service.addFavorite('pikachu');
+    service.addFavorite('charmander');
+
+    expect(service.getFavorites().length).toBe(2);
+
+    service.clearFavorites();
+
+    expect(service.getFavorites()).toEqual([]);
+    expect(localStorage.getItem('pokemon_favorites')).toEqual('[]');
+  });
 });
