@@ -129,10 +129,11 @@ export class HomePage implements OnInit {
 
   searchPokemon(event: any) {
     const term = event.detail.value.trim().toLowerCase();
+    this.searchTerm = term;
 
     if (!term) {
       this.isSearchingSpecificPokemon = false;
-      this.displayedPokemons = this.pokemons.slice(this.offset, this.offset + this.limit);
+      this.displayedPokemons = this.pokemons;
       return;
     }
 
