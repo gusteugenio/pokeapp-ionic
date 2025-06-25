@@ -12,7 +12,6 @@ import { forkJoin, Observable } from 'rxjs';
   standalone: false,
 })
 export class FavoritesPage implements OnInit {
-  favoriteNames: [] = [];
   allFavoritesSortedById: Pokemon[] = [];
   displayedPokemons: Pokemon[] = [];
   limit = 12;
