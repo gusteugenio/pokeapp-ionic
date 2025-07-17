@@ -8,7 +8,7 @@ const trainerRoutes = require('./routes/trainer');
 
 const app = express();
 const corsOptions = {
-  origin: 'https://pokeapp-ionic-frontend.vercel.app',
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 };
