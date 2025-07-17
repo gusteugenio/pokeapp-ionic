@@ -20,7 +20,7 @@ O projeto está disponível em produção com deploys separados para frontend e 
 
 ### Branches do repositório
 
-- A branch `main` é focada no desenvolvimento local, testes e atualizações para desenvolvimento  
+- A branch `main` é focada no desenvolvimento local, testes e atualizações para desenvolvimento (utilize ao clonar o repositório)
 - A branch `prod` contém o código para deploy e produção, usada para builds no Vercel (frontend) e Render (backend)
 
 ---
@@ -83,10 +83,10 @@ API base: https://pokeapp-ionic-backend.onrender.com
 
 ## 🚀 Executando o Projeto
 
-### 🔹 1. Clone o repositório
+### 🔹 1. Clone o repositório (com a branch de desenvolvimento)
 
 ```bash
-git clone https://github.com/gusteugenio/pokeapp-ionic.git
+git clone -b main https://github.com/gusteugenio/pokeapp-ionic
 cd pokeapp-ionic
 ```
 
