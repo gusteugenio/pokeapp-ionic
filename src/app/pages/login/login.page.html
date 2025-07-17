@@ -1,0 +1,27 @@
+<ion-content>
+  <div class="poke-login-container">
+    <div class="poke-login-left">
+      <h2>Bem-vindo de volta!</h2>
+      <p>Faça login para continuar sua jornada Pokémon ⚡</p>
+      <img src="assets/img/pikachu-login.png" alt="Pikachu" class="poke-pokemon-image" />
+    </div>
+    <div class="poke-login-right">
+      <h2 class="poke-form-title">Login <img src="assets/img/pokeball.png" alt="Pokébola" class="poke-pokeball" /></h2>
+      <form (submit)="login()" class="poke-form">
+        <ion-item class="poke-form-item">
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" name="email" required [(ngModel)]="email"></ion-input>
+        </ion-item>
+        <ion-item class="poke-form-item">
+          <ion-label position="floating">Senha</ion-label>
+          <ion-input type="password" name="password" required [(ngModel)]="password"></ion-input>
+        </ion-item>
+        <div *ngIf="error" class="poke-error">{{ error }}</div>
+        <ion-button expand="block" class="poke-button" type="submit">Entrar</ion-button>
+        <div class="poke-link">
+          Primeira vez por aqui? <a routerLink="/register">Crie uma conta</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

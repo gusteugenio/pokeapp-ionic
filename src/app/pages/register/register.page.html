@@ -1,0 +1,39 @@
+<ion-content>
+  <div class="poke-login-container">
+    <div class="poke-login-left">
+      <h2>Pronto para começar?</h2>
+      <p>Crie sua conta e torne-se um mestre Pokémon! 🔥</p>
+      <img src="assets/img/charizard-register.png" alt="Charizard" class="poke-pokemon-image" />
+    </div>
+    <div class="poke-login-right">
+      <h2 class="poke-form-title">Preencha os dados <img src="assets/img/pokeball.png" alt="Pokébola" class="poke-pokeball" /></h2>
+      <form (submit)="register()" class="poke-form">
+        <ion-item class="poke-form-item">
+          <ion-label position="floating">Nome de Usuário</ion-label>
+          <ion-input type="text" name="username" required [(ngModel)]="username"></ion-input>
+        </ion-item>
+        <ion-item class="poke-form-item">
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" name="email" required [(ngModel)]="email"></ion-input>
+        </ion-item>
+        <ion-item class="poke-form-item">
+          <ion-label position="floating">Senha</ion-label>
+          <ion-input type="password" name="password" required [(ngModel)]="password"></ion-input>
+        </ion-item>
+        <ion-item class="poke-form-item">
+          <ion-label position="floating">Gênero</ion-label>
+          <ion-select name="gender" interface="popover" [(ngModel)]="gender">
+            <ion-select-option value="male">Masculino</ion-select-option>
+            <ion-select-option value="female">Feminino</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="error" class="poke-error">{{ error }}</div>
+        <div *ngIf="success" class="poke-success">{{ success }}</div>
+        <ion-button expand="block" class="poke-button" type="submit">Cadastrar</ion-button>
+        <div class="poke-link">
+          Já tem uma conta? <a routerLink="/login">Entrar agora</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>
