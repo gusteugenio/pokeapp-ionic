@@ -13,7 +13,7 @@ export class AuthService {
   }
 
   register(data: { username: string, email: string, password: string, gender: string }) {
-    return this.http.post(`${this.baseUrl}/register`, data);
+    return this.http.post<{ message: string }>(`${this.baseUrl}/register`, data);
   }
 
   saveToken(token: string) {

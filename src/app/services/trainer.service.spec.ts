@@ -10,7 +10,8 @@ describe('TrainerService', () => {
   beforeEach(() => {
     spyOn(localStorage, 'getItem').and.callFake((key: string) => {
       if (key === 'trainer_level') return '0';
-      if (key === 'trainer_gender') return null;
+      if (key === 'trainer_gender') return 'male';
+      if (key === 'trainer_id') return '123';
       return null;
     });
     spyOn(localStorage, 'setItem').and.callFake(() => {});
@@ -21,6 +22,11 @@ describe('TrainerService', () => {
 
     service = TestBed.inject(TrainerService);
     httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
+    localStorage.clear();
   });
 
   it('should be created', () => {
@@ -57,14 +63,16 @@ describe('TrainerService', () => {
     expect(localStorage.setItem).toHaveBeenCalledWith('trainer_level', '1');
   });
 
-  it('should get and set trainer gender correctly', () => {
-    (localStorage.getItem as jasmine.Spy).and.callFake((key: string) => {
-      if (key === 'trainer_gender') return 'male';
-      return null;
-    });
-    expect(service.getTrainerGender()).toBe('male');
+  it('should load trainer info from backend and set it correctly', () => {
+    const mockResponse = { username: 'Maria', gender: 'female' };
 
-    service.setTrainerGender('female');
-    expect(localStorage.setItem).toHaveBeenCalledWith('trainer_gender', 'female');
+    service.loadTrainerInfo();
+
+    const req = httpMock.expectOne('http://localhost:4000/trainer/get-trainer-info?userId=123'); // O userId agora é '123'
+    expect(req.request.method).toBe('GET');
+    req.flush(mockResponse);
+
+    expect(service.getTrainerName()).toBe('Maria');
+    expect(service.getTrainerGender()).toBe('female');
   });
 });

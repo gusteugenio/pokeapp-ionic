@@ -6,19 +6,21 @@ import { TrainerService } from './trainer.service';
 // Atenção: Ao descomentar o uso do webhook, os testes irão falhar se esperar por alguma chamada.
 describe('FavoriteService', () => {
   let service: FavoriteService;
-  let trainerMock: TrainerService;
   let httpMock: HttpTestingController;
+  let trainerServiceMock: jasmine.SpyObj<TrainerService>;
 
   beforeEach(() => {
+    trainerServiceMock = jasmine.createSpyObj('TrainerService', ['getTrainerId', 'levelUp']);
+    
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule]
+      imports: [HttpClientTestingModule],
+      providers: [
+        FavoriteService,
+        { provide: TrainerService, useValue: trainerServiceMock }
+      ]
     });
-    localStorage.clear();
-  });
 
-  beforeEach(() => {
     service = TestBed.inject(FavoriteService);
-    trainerMock = TestBed.inject(TrainerService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -30,43 +32,118 @@ describe('FavoriteService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should load favorites from localStorage on creation', () => {
-    localStorage.setItem('pokemon_favorites', JSON.stringify(['pikachu']));
-    service = new FavoriteService(httpMock as any, trainerMock as any);
+  it('should load favorites on initialization', () => {
+    const mockFavorites = ['Pikachu', 'Charizard'];
+    const mockUserId = 'trainer123';
+    trainerServiceMock.getTrainerId.and.returnValue(mockUserId);
 
-    expect(service.getFavorites()).toEqual(['pikachu']);
+    service['loadFavorites']();
+
+    const req = httpMock.expectOne(`http://localhost:4000/favorites/get-favorites?userId=${mockUserId}`);
+    expect(req.request.method).toBe('GET');
+    req.flush({ favorites: mockFavorites });
+
+    expect(service.getFavorites()).toEqual(mockFavorites);
+    expect(trainerServiceMock.levelUp).toHaveBeenCalledWith(mockFavorites.length);
   });
 
-  it('should return empty favorites if none saved', () => {
-    expect(service.getFavorites()).toEqual([]);
+  it('should add a favorite if not already in favorites', () => {
+    service.addFavorite('Bulbasaur');
+
+    expect(service.getFavorites()).toContain('Bulbasaur');
+    expect(trainerServiceMock.levelUp).toHaveBeenCalledWith(1);
+
+    const req = httpMock.expectOne('http://localhost:4000/favorites/sync-favorites');
+    expect(req.request.method).toBe('POST');
+    req.flush({ success: true });
+
+    httpMock.verify();
   });
 
-  it('should not add duplicate favorite', () => {
-    service.addFavorite('charmander');
-    service.addFavorite('charmander');
+  it('should remove a favorite', () => {
+    service['favorites'] = ['Pikachu', 'Charmander'];
 
-    expect(service.getFavorites().filter(f => f === 'charmander').length).toBe(1);
+    service.removeFavorite('Pikachu');
+    expect(service.getFavorites()).toEqual(['Charmander']);
+    expect(trainerServiceMock.levelUp).toHaveBeenCalledWith(1);
+
+    const req = httpMock.expectOne('http://localhost:4000/favorites/sync-favorites');
+    expect(req.request.method).toBe('POST');
+    req.flush({ success: true });
+
+    httpMock.verify();
   });
 
-  it('should toggle favorite correctly', () => {
-    service.addFavorite('pikachu');
-    expect(JSON.parse(localStorage.getItem('pokemon_favorites')!)).toContain('pikachu');
-    expect(service.isFavorite('pikachu')).toBeTrue();
+  it('should toggle a favorite', () => {
+    service['favorites'] = ['Pikachu'];
 
-    service.toggleFavorite('pikachu');
-    expect(JSON.parse(localStorage.getItem('pokemon_favorites')!)).not.toContain('pikachu');
-    expect(service.isFavorite('pikachu')).toBeFalse();
+    service.toggleFavorite('Charmander');
+    expect(service.getFavorites()).toContain('Charmander');
+    expect(trainerServiceMock.levelUp).toHaveBeenCalledWith(2);
+
+    let req = httpMock.expectOne('http://localhost:4000/favorites/sync-favorites');
+    expect(req.request.method).toBe('POST');
+    req.flush({ success: true });
+
+    service.toggleFavorite('Pikachu');
+    expect(service.getFavorites()).toEqual(['Charmander']);
+    expect(trainerServiceMock.levelUp).toHaveBeenCalledWith(1);
+
+    req = httpMock.expectOne('http://localhost:4000/favorites/sync-favorites');
+    expect(req.request.method).toBe('POST');
+    req.flush({ success: true });
+
+    httpMock.verify();
   });
 
   it('should clear all favorites', () => {
-    service.addFavorite('pikachu');
-    service.addFavorite('charmander');
-
-    expect(service.getFavorites().length).toBe(2);
+    service['favorites'] = ['Pikachu', 'Charmander'];
 
     service.clearFavorites();
-
     expect(service.getFavorites()).toEqual([]);
-    expect(localStorage.getItem('pokemon_favorites')).toEqual('[]');
+    expect(trainerServiceMock.levelUp).toHaveBeenCalledWith(0);
+
+    const req = httpMock.expectOne('http://localhost:4000/favorites/sync-favorites');
+    expect(req.request.method).toBe('POST');
+    req.flush({ success: true });
+
+    httpMock.verify();
+  });
+
+  it('should check if a name is a favorite', () => {
+    service['favorites'] = ['Pikachu', 'Charmander'];
+
+    expect(service.isFavorite('Pikachu')).toBeTrue();
+    expect(service.isFavorite('Bulbasaur')).toBeFalse();
+  });
+
+  it('should log an error if loading favorites fails', () => {
+    const mockUserId = 'trainer123';
+    trainerServiceMock.getTrainerId.and.returnValue(mockUserId);
+
+    spyOn(console, 'error');
+
+    service['loadFavorites']();
+    
+    const req = httpMock.expectOne(`http://localhost:4000/favorites/get-favorites?userId=${mockUserId}`);
+    req.flush({ error: 'User not found' }, { status: 500, statusText: 'Server Error' });
+
+    expect(console.error).toHaveBeenCalledWith('Erro ao carregar os favoritos', jasmine.any(Object));
+  });
+
+  it('should log an error if syncing favorites fails', () => {
+    const mockUserId = 'trainer123';
+    service['favorites'] = ['Pikachu'];
+
+    trainerServiceMock.getTrainerId.and.returnValue(mockUserId);
+
+    spyOn(console, 'error');
+
+    service['syncFavorites']();
+
+    const req = httpMock.expectOne('http://localhost:4000/favorites/sync-favorites');
+    req.flush({ error: 'Sync failed' }, { status: 500, statusText: 'Server Error' });
+
+    expect(console.error).toHaveBeenCalledWith('Erro ao sincronizar favoritos no backend', jasmine.any(Object));
   });
 });
