@@ -17,7 +17,7 @@ services:
       - ./auth-backend:/app
       - /app/node_modules
     env_file:
-      - ./auth-backend/.env
+      - ./auth-backend/.env.example
 
   # Descomente para fazer o build da imagem do backend (uso do webhook).
   # backend:
