@@ -2,12 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-// Localmente, troque para 'http://localhost:4000'.
-const API_BASE = 'https://pokeapp-ionic-backend.onrender.com';
-
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private baseUrl = `${API_BASE}/auth`;
+  private baseUrl = 'http://localhost:4000/auth';
 
   constructor(private http: HttpClient, private router: Router) {}
 
