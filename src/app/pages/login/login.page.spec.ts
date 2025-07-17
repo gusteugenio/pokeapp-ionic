@@ -15,7 +15,13 @@ describe('LoginPage', () => {
 
   beforeEach(() => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['login', 'saveToken']);
-    trainerServiceSpy = jasmine.createSpyObj('TrainerService', ['setTrainerId']);
+    trainerServiceSpy = jasmine.createSpyObj('TrainerService', [
+      'setTrainerId',
+      'getTrainerId',
+      'loadTrainerInfo',
+      'levelUp'
+    ]);
+    trainerServiceSpy.getTrainerId.and.returnValue('mock-user-id');
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     TestBed.configureTestingModule({

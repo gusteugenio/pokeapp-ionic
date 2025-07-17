@@ -31,7 +31,6 @@ export class TrainerAreaPage implements OnInit {
     this.favoriteService.favoritesChanged.subscribe(() => {
       this.capturedPokemonsCount = this.favoriteService.getFavorites().length;
     });
-    this.capturedPokemonsCount = this.favoriteService.getFavorites().length;
 
     this.trainerService.loadTrainerInfo();
 

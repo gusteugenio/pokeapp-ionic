@@ -20,7 +20,7 @@ export class FavoriteService {
     this.trainerService.levelUp(this.favorites.length);
   }
 
-  private loadFavorites() {
+  loadFavorites() {
     const userId = this.trainerService.getTrainerId();
 
     if (userId) {
@@ -28,6 +28,7 @@ export class FavoriteService {
         next: (response) => {
           this.favorites = response.favorites;
           this.trainerService.levelUp(this.favorites.length);
+          this.favoritesChanged.next();
         },
         error: (err) => {
           console.error('Erro ao carregar os favoritos', err);
