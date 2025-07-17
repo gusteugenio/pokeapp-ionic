@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TrainerService } from 'src/app/services/trainer.service';
 import { FavoriteService } from 'src/app/services/favorite.service';
-import { AlertController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-trainer-area',
@@ -20,7 +20,7 @@ export class TrainerAreaPage implements OnInit {
   constructor(
     private trainerService: TrainerService,
     private favoriteService: FavoriteService,
-    private alertController: AlertController
+    private authService: AuthService
   ) {}
 
   async ngOnInit() {
@@ -33,85 +33,28 @@ export class TrainerAreaPage implements OnInit {
     });
     this.capturedPokemonsCount = this.favoriteService.getFavorites().length;
 
-    this.trainerGender = this.trainerService.getTrainerGender();
-    this.trainerName = this.trainerService.getTrainerName();
+    this.trainerService.loadTrainerInfo();
 
-    if (!this.trainerGender) {
-      await this.presentGenderSelection();
-      this.trainerGender = this.trainerService.getTrainerGender();
-    }
-
-    if (!this.trainerName) {
-      await this.presentNamePrompt();
-    }
-
-    if (this.trainerGender) {
-      this.setTrainerImage(this.trainerGender);
-    }
-  }
-
-  async presentGenderSelection() {
-    const alert = await this.alertController.create({
-      header: 'Escolha seu Gênero',
-      buttons: [
-        {
-          text: 'Masculino',
-          handler: () => {
-            this.trainerService.setTrainerGender('male');
-            this.trainerGender = 'male';
-            this.setTrainerImage('male');
-          }
-        },
-        {
-          text: 'Feminino',
-          handler: () => {
-            this.trainerService.setTrainerGender('female');
-            this.trainerGender = 'female';
-            this.setTrainerImage('female');
-          }
-        }
-      ],
-      backdropDismiss: false,
+    this.trainerService.trainerNameSubject.subscribe(name => {
+      this.trainerName = name;
     });
 
-    await alert.present();
-  }
-
-  async presentNamePrompt() {
-    const alert = await this.alertController.create({
-      header: 'Qual o seu nome, Treinador?',
-      inputs: [
-        {
-          name: 'name',
-          type: 'text',
-          placeholder: 'Digite seu nome aqui'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Confirmar',
-          handler: (data) => {
-            if (data.name && data.name.trim().length > 0) {
-              this.trainerName = data.name.trim();
-              if (this.trainerName) {
-                localStorage.setItem('trainer_name', this.trainerName);
-              }
-            } else {
-              this.presentNamePrompt();
-            }
-          }
-        }
-      ],
-      backdropDismiss: false,
+    this.trainerService.trainerGenderSubject.subscribe(gender => {
+      this.trainerGender = gender;
+      if (this.trainerGender) {
+        this.setTrainerImage(this.trainerGender);
+      }
     });
-
-    await alert.present();
   }
 
   setTrainerImage(gender: 'male' | 'female') {
     this.trainerImageUrl = gender === 'female'
       ? 'assets/img/serena.png'
       : 'assets/img/ash.png';
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
   get pokemonsForNextLevel(): number {
