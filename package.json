@@ -11,7 +11,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "deploy": "gh-pages -d www --repo https://github.com/gusteugenio/pokeapp-ionic.git",
+    "start-app": "concurrently \"npm run backend-auth\" \"ionic serve\"",
     "start-log": "concurrently \"npm run backend\" \"ionic serve\"",
+    "backend-auth": "node auth-backend/server.js",
     "backend": "node backend/server.js"
   },
   "private": true,
@@ -23,7 +25,7 @@
     "@angular/forms": "^19.0.0",
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
-    "@angular/router": "^19.0.0",
+    "@angular/router": "^19.2.14",
     "@capacitor/app": "7.0.1",
     "@capacitor/core": "7.4.0",
     "@capacitor/haptics": "7.0.1",
