@@ -20,7 +20,7 @@ O projeto está disponível em produção com deploys separados para frontend e 
 
 ### Branches do repositório
 
-- A branch `main` é focada no desenvolvimento local, testes e atualizações para desenvolvimento (utilize essa ao clonar o repositório)
+- A branch `main` é focada no desenvolvimento local, testes e atualizações para desenvolvimento
 - A branch `prod` contém o código para deploy e produção, usada para builds no Vercel (frontend) e Render (backend)
 
 ---
