@@ -232,8 +232,7 @@ Na página de detalhes, os status do Pokémon são exibidos visualmente com core
 
 Confira os GIFs da aplicação na pasta [`src/assets/gifs`](https://github.com/gusteugenio/pokeapp-ionic/tree/main/src/assets/gifs), demonstrando:
 
-*serão ajustados em breve com nova funcionalidade de autenticação.
-
+- Fluxo de registro e login com validação de credenciais
 - Paginação da lista de Pokémons
 - Filtragem por tipos
 - Busca de Pokémon
