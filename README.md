@@ -179,7 +179,7 @@ this.http.post(this.webhookUrl, {
 }).subscribe();
 ```
 
-Os logs são salvos em `auth-backend/logs.txt`.
+Os logs são salvos em `backend/logs.txt`.
 
 ---
 
