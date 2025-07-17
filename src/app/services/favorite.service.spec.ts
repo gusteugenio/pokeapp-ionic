@@ -37,7 +37,7 @@ describe('FavoriteService', () => {
     const mockUserId = 'trainer123';
     trainerServiceMock.getTrainerId.and.returnValue(mockUserId);
 
-    service['loadFavorites']();
+    service.loadFavorites().subscribe();
 
     const req = httpMock.expectOne(`http://localhost:4000/favorites/get-favorites?userId=${mockUserId}`);
     expect(req.request.method).toBe('GET');
@@ -123,7 +123,7 @@ describe('FavoriteService', () => {
 
     spyOn(console, 'error');
 
-    service['loadFavorites']();
+    service.loadFavorites().subscribe();
     
     const req = httpMock.expectOne(`http://localhost:4000/favorites/get-favorites?userId=${mockUserId}`);
     req.flush({ error: 'User not found' }, { status: 500, statusText: 'Server Error' });

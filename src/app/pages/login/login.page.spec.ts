@@ -12,13 +12,14 @@ describe('LoginPage', () => {
   let authServiceSpy: jasmine.SpyObj<AuthService>;
   let trainerServiceSpy: jasmine.SpyObj<TrainerService>;
   let routerSpy: jasmine.SpyObj<Router>;
-
+''
   beforeEach(() => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['login', 'saveToken']);
     trainerServiceSpy = jasmine.createSpyObj('TrainerService', [
       'setTrainerId',
       'getTrainerId',
       'loadTrainerInfo',
+      'loadTrainerLevel',
       'levelUp'
     ]);
     trainerServiceSpy.getTrainerId.and.returnValue('mock-user-id');
@@ -46,6 +47,8 @@ describe('LoginPage', () => {
   it('should call login and navigate to home on success', () => {
     const mockResponse = { token: 'test-token', id: 'trainer-id' };
     authServiceSpy.login.and.returnValue(of(mockResponse));
+
+    spyOn(component['favoriteService'], 'loadFavorites').and.returnValue(of(null));
 
     component.email = 'test@example.com';
     component.password = 'password123';

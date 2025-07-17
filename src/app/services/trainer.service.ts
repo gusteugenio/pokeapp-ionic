@@ -22,17 +22,29 @@ export class TrainerService {
     this.loadTrainerLevel();
   }
 
-  private loadTrainerLevel() {
-    const storedLevel = localStorage.getItem(TRAINER_LEVEL_KEY);
+  loadTrainerLevel() {
+    const trainerId = this.getTrainerId();
+    if (!trainerId) {
+      this.trainerLevelSubject.next(0);
+      return;
+    }
+    const key = this.getTrainerLevelKey(trainerId);
+    const storedLevel = localStorage.getItem(key);
     const level = storedLevel ? parseInt(storedLevel, 10) : 0;
     this.trainerLevelSubject.next(level);
   }
 
   private saveTrainerLevel(level: number) {
+    const trainerId = this.getTrainerId();
+    if (!trainerId) {
+      return;
+    }
+    const key = this.getTrainerLevelKey(trainerId);
+
     // const previousLevel = this.trainerLevelSubject.value;
     const levelToSave = Math.min(level, MAX_TRAINER_LEVEL);
 
-    localStorage.setItem(TRAINER_LEVEL_KEY, levelToSave.toString());
+    localStorage.setItem(key, levelToSave.toString());
     this.trainerLevelSubject.next(levelToSave);
 
     // let eventType: 'level_up' | 'level_down' | null = null;
@@ -90,10 +102,14 @@ export class TrainerService {
   }
 
   getTrainerId(): string | null {
-    return localStorage.getItem('trainer_id');
+    return localStorage.getItem('trainer_id')
   }
 
   setTrainerId(trainerId: string) {
     localStorage.setItem('trainer_id', trainerId);
+  }
+
+  getTrainerLevelKey(trainerId: string): string {
+    return `trainer_level_${trainerId}`;
   }
 }

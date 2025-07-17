@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { TrainerService } from './trainer.service';
+import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,18 +25,20 @@ export class FavoriteService {
     const userId = this.trainerService.getTrainerId();
 
     if (userId) {
-      this.http.get<{ favorites: string[] }>(`http://localhost:4000/favorites/get-favorites?userId=${userId}`).subscribe({
-        next: (response) => {
+      return this.http.get<{ favorites: string[] }>(`http://localhost:4000/favorites/get-favorites?userId=${userId}`).pipe(
+        tap(response => {
           this.favorites = response.favorites;
           this.trainerService.levelUp(this.favorites.length);
           this.favoritesChanged.next();
-        },
-        error: (err) => {
+        }),
+        catchError(err => {
           console.error('Erro ao carregar os favoritos', err);
-        }
-      });
+          return of(null);
+        })
+      );
     } else {
       console.log('ID do usuário não encontrado.');
+      return of(null);
     }
   }
 
@@ -57,6 +60,12 @@ export class FavoriteService {
       this.favorites.push(name);
       this.saveFavorites();
       this.syncFavorites();
+
+      // this.http.post(this.webhookUrl, {
+      //   event: 'favorited',
+      //   pokemon: name,
+      //   trainerName: this.trainerService.getTrainerName()
+      // }).subscribe();
     }
   }
 
@@ -64,6 +73,12 @@ export class FavoriteService {
     this.favorites = this.favorites.filter(f => f !== name);
     this.saveFavorites();
     this.syncFavorites();
+    
+    // this.http.post(this.webhookUrl, {
+    //   event: 'unfavorited',
+    //   pokemon: name,
+    //   trainerName: this.trainerService.getTrainerName()
+    // }).subscribe();
   }
 
   toggleFavorite(name: string) {
@@ -78,6 +93,11 @@ export class FavoriteService {
     this.favorites = [];
     this.saveFavorites();
     this.syncFavorites();
+
+    // this.http.post(this.webhookUrl, {
+    //   event: 'favorites_cleared',
+    //   trainerName: this.trainerService.getTrainerName()
+    // }).subscribe();
   }
 
   private syncFavorites() {

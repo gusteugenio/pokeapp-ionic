@@ -60,7 +60,7 @@ describe('TrainerService', () => {
 
   it('should save level to localStorage when leveling up', () => {
     service.levelUp(5);
-    expect(localStorage.setItem).toHaveBeenCalledWith('trainer_level', '1');
+    expect(localStorage.setItem).toHaveBeenCalledWith('trainer_level_123', '1');
   });
 
   it('should load trainer info from backend and set it correctly', () => {

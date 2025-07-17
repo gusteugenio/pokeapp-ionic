@@ -23,10 +23,11 @@ export class LoginPage {
         this.auth.saveToken(res.token);
         this.trainerService.setTrainerId(res.id);
         this.trainerService.loadTrainerInfo();
+        this.trainerService.loadTrainerLevel();
 
-        this.favoriteService.loadFavorites();
-
-        this.router.navigate(['/home']);
+        this.favoriteService.loadFavorites().subscribe(() => {
+          this.router.navigate(['/home']);
+        });
       },
       error: (err) => {
         this.error = 'Email ou senha inválidos. Verifique os dados e tente novamente.'
