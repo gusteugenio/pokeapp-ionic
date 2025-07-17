@@ -55,7 +55,7 @@
                 }
               ],
               "outputHashing": "all",
-              "baseHref": "/pokeapp-ionic/"
+              "baseHref": "/"
             },
             "development": {
               "buildOptimizer": false,
