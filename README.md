@@ -1,4 +1,3 @@
-
 <h1 align="center">📱 Pokedex App</h1>
 
 <p align="center">
@@ -7,8 +6,22 @@
 
 <p align="center">
   Uma aplicação moderna construída com <strong>Ionic</strong> + <strong>Angular</strong> consumindo a <a href="https://pokeapi.co" target="_blank">PokeAPI</a> para explorar, capturar e gerenciar Pokémons — diretamente do seu navegador!<br />
-  <em><strong>Deploy ainda será feito</strong> (não está mais no GitHub Pages por conter backend).</em>
+  <a href="https://pokeapp-ionic-frontend.vercel.app/">🚀 Acesse a versão online aqui</a>
 </p>
+
+---
+
+## 🚀 Deploy
+
+O projeto está disponível em produção com deploys separados para frontend e backend:
+
+- Frontend hospedado no **Vercel**  
+- Backend hospedado no **Render**  
+
+### Branches do repositório
+
+- A branch `main` é focada no desenvolvimento local, testes e atualizações para desenvolvimento  
+- A branch `prod` contém o código para deploy e produção, usada para builds no Vercel (frontend) e Render (backend)
 
 ---
 
@@ -41,6 +54,7 @@
 - 🐳 Ambiente integrado com Docker (frontend, backend e webhook)
 - 🧪 Testes unitários com cobertura de funcionalidades-chave
 - 🔗 Webhooks para eventos de captura e progresso de nível
+- 🌐 Deploy contínuo via Vercel e Render
 
 ---
 
@@ -52,6 +66,18 @@
 - **Services reativos com RxJS**
 - **Dockerfile separado para frontend e backend**
 - **Variáveis de ambiente via `.env` para o backend**
+
+---
+
+## 🖥️ Backend
+
+O backend é desenvolvido em **Node.js** com **Express**, utilizando **MongoDB** para persistência e **JWT** para autenticação.  
+
+Ele é hospedado de forma independente no Render, possibilitando escalabilidade e isolamento. 
+
+Sua principal responsabilidade é gerenciar autenticação, favoritos, informações do treinador, e sincronização de dados entre frontend e banco.  
+
+API base: https://pokeapp-ionic-backend.onrender.com
 
 ---
 
@@ -142,7 +168,7 @@ it('should retrieve pokemon species by name', () => {
     expect(species).toEqual(mockSpecies);
   });
 
-  const req = httpMock.expectOne(\`https://pokeapi.co/api/v2/pokemon-species/\${name}\`);
+  const req = httpMock.expectOne(`https://pokeapi.co/api/v2/pokemon-species/${name}`);
   expect(req.request.method).toBe('GET');
   req.flush(mockSpecies);
 });
@@ -152,7 +178,7 @@ it('should retrieve pokemon species by name', () => {
 
 ## 📡 Webhooks
 
-O projeto envia eventos para um servidor backend (Express) sempre que um Pokémon for favoritado/desfavoritado ou o treinador subir de nível.
+O projeto envia eventos para um servidor backend (Express) sempre que um Pokémon for favoritado/desfavoritado ou o treinador mudar de nível.
 
 Exemplo de payload:
 
@@ -173,7 +199,7 @@ Os logs são salvos em `auth-backend/logs.txt`.
 
 > Uma experiência gamificada no estilo Pokémon para o usuário.
 
-- 👤 Escolha de nome e gênero (Ash ou Serena)
+- 👤 Avatar personalizado de acordo com gênero (Ash ou Serena)
 - 🧱 Progressão com níveis a cada 5 capturas
 - 🏅 Sistema de Badges por progresso (bronze, prata, ouro)
 - 📈 Barra de progresso visual e motivação personalizada
