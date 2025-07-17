@@ -3,8 +3,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 const TRAINER_LEVEL_KEY = 'trainer_level';
-const TRAINER_GENDER_KEY = 'trainer_gender';
-const TRAINER_NAME_KEY = 'trainer_name';
 const POKEMONS_FOR_LEVEL_UP = 5;
 const MAX_TRAINER_LEVEL = 50;
 
@@ -14,6 +12,9 @@ const MAX_TRAINER_LEVEL = 50;
 export class TrainerService {
   private trainerLevelSubject = new BehaviorSubject<number>(0);
   public trainerLevel$: Observable<number> = this.trainerLevelSubject.asObservable();
+  public trainerNameSubject = new BehaviorSubject<string | null>(null);
+  public trainerGenderSubject = new BehaviorSubject<'male' | 'female' | null>(null);
+
   // Descomente as chamadas ao rodar localmente.
   // private webhookUrl = 'http://localhost:3000/webhook';
 
@@ -64,20 +65,35 @@ export class TrainerService {
     return this.trainerLevelSubject.value;
   }
 
-  getTrainerGender(): 'male' | 'female' | null {
-    const gender = localStorage.getItem(TRAINER_GENDER_KEY);
-    if (gender === 'male' || gender === 'female') {
-      return gender;
-    }
-    return null;
-  }
-
   getTrainerName(): string | null {
-    return localStorage.getItem(TRAINER_NAME_KEY);
+    return this.trainerNameSubject.value;
   }
 
-  setTrainerGender(gender: 'male' | 'female') {
-    localStorage.setItem(TRAINER_GENDER_KEY, gender);
+  getTrainerGender(): 'male' | 'female' | null {
+    return this.trainerGenderSubject.value;
   }
 
+  loadTrainerInfo() {
+    const userId = this.getTrainerId();
+    if (userId) {
+      this.http.get<{ username: string, gender: 'male' | 'female' }>(`http://localhost:4000/trainer/get-trainer-info?userId=${userId}`)
+        .subscribe({
+          next: (response) => {
+            this.trainerNameSubject.next(response.username);
+            this.trainerGenderSubject.next(response.gender);
+          },
+          error: (error) => {
+            console.error('Erro ao carregar informações do treinador', error);
+          }
+        });
+    }
+  }
+
+  getTrainerId(): string | null {
+    return localStorage.getItem('trainer_id');
+  }
+
+  setTrainerId(trainerId: string) {
+    localStorage.setItem('trainer_id', trainerId);
+  }
 }
