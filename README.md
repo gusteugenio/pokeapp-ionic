@@ -1,3 +1,4 @@
+
 <h1 align="center">📱 Pokedex App</h1>
 
 <p align="center">
@@ -6,7 +7,7 @@
 
 <p align="center">
   Uma aplicação moderna construída com <strong>Ionic</strong> + <strong>Angular</strong> consumindo a <a href="https://pokeapi.co" target="_blank">PokeAPI</a> para explorar, capturar e gerenciar Pokémons — diretamente do seu navegador!<br />
-  <a href="https://gusteugenio.github.io/pokeapp-ionic/">🚀 Acesse a versão online aqui</a>
+  <em><strong>Deploy ainda será feito</strong> (não está mais no GitHub Pages por conter backend).</em>
 </p>
 
 ---
@@ -20,8 +21,10 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-0db7ed?style=for-the-badge&logo=docker&logoColor=white)
 ![Chart.js](https://img.shields.io/badge/Chart.js-ff6384?style=for-the-badge&logo=chartdotjs&logoColor=white)
-![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-121013?style=for-the-badge&logo=github&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=for-the-badge&logoColor=white)
 
 </div>
 
@@ -29,42 +32,26 @@
 
 ## ✨ Destaques do Projeto
 
-- 🔁 Paginação e busca dinâmica de Pokémons (inclusive por partes do nome, como "char" → "charmander" e outros resultados)
-- ⭐ Favoritar (capturar) Pokémons com armazenamento local
-- 📊 Tela de detalhes com gráfico de status via Chart.js
-- 🧠 Área do Treinador com sistema de níveis, badges e progresso
-- 🌐 Deploy contínuo via GitHub Pages
-- 🧪 Testes unitários para funcionalidades chave
-- 🔗 Integração com Webhooks para eventos de favoritar/desfavoritar e mudança de nível
-- 🐳 Ambiente pronto para Docker
-- 🖥️ Backend com Node.js (Express + CORS) gerando logs em `logs.txt` a cada evento
+- 🔐 Sistema de autenticação com JWT
+- 👤 Cadastro e login com persistência de usuário
+- 🔁 Paginação e busca dinâmica de Pokémons
+- ⭐ Favoritar (capturar) Pokémons com sincronização backend
+- 📊 Tela de detalhes com gráfico via Chart.js
+- 🧠 Área do Treinador com sistema de níveis e badges
+- 🐳 Ambiente integrado com Docker (frontend, backend e webhook)
+- 🧪 Testes unitários com cobertura de funcionalidades-chave
+- 🔗 Webhooks para eventos de captura e progresso de nível
 
 ---
 
 ## 📦 Estrutura e Arquitetura
 
-- **Componentização inteligente**: cada tela é isolada e independente
-- **Services com responsabilidades claras**: comunicação com API, gestão de favoritos e progresso do treinador
-- **Reatividade com RxJS**: Subject e BehaviorSubject usados para refletir atualizações em tempo real
-- **Chamadas assíncronas paralelas** com `forkJoin` para performance
-- **Separação de models** para melhor tipagem com TypeScript
-
----
-
-## 🧪 Testes Unitários
-Testes garantem que funcionalidades-chave, como o sistema de favoritos, funcionem corretamente e que mudanças futuras não quebrem o app.
-
-```ts
-it('should toggle favorite correctly', () => {
-  service.addFavorite('pikachu');
-  expect(JSON.parse(localStorage.getItem('pokemon_favorites')!)).toContain('pikachu');
-  expect(service.isFavorite('pikachu')).toBeTrue();
-
-  service.toggleFavorite('pikachu');
-  expect(JSON.parse(localStorage.getItem('pokemon_favorites')!)).not.toContain('pikachu');
-  expect(service.isFavorite('pikachu')).toBeFalse();
-});
-```
+- **Frontend em Ionic + Angular**
+- **Backend em Node.js + Express + Mongoose + JWT**
+- **Models bem definidos com TypeScript**
+- **Services reativos com RxJS**
+- **Dockerfile separado para frontend e backend**
+- **Variáveis de ambiente via `.env` para o backend**
 
 ---
 
@@ -79,7 +66,13 @@ cd pokeapp-ionic
 
 ### 🔹 2. Usando Docker (Recomendado)
 
-Executa tanto o frontend quanto o backend (servidor Express) de forma integrada:
+Antes de subir o ambiente, rode:
+
+```bash
+npm install
+```
+
+Depois, execute:
 
 ```bash
 docker-compose up --build
@@ -89,45 +82,79 @@ A aplicação estará disponível em: [http://localhost:8100](http://localhost:8
 
 ### 🔹 3. Manualmente (sem Docker)
 
-Para executar apenas o frontend, rode os seguintes comandos:
-
 ```bash
 npm install
-ionic serve
+npm run start-app
 ```
 
-Para executar ambos os serviços (frontend e backend) em paralelo, execute:
+Ou para rodar com logs (frontend + backend + webhook):
 
 ```bash
 npm install
 npm run start-log
 ```
 
-Isso executará dois serviços em paralelo com `concurrently`:  
+Isso executará três serviços em paralelo com `concurrently`:  
 - O frontend (via `ionic serve`)  
-- O backend Express (via `node backend/server.js`)
+- O backend com autenticação (via `node auth-backend/server.js`)
+- O backend com logs (via `node backend/server.js`)
 
-A aplicação estará disponível em: [http://localhost:8100](http://localhost:8100)
+
+### 🔸 Importante: configurar o `.env`
+
+Para que o backend funcione corretamente, no arquivo `.env.example` (localizado na pasta `auth-backend`) preencha os seguintes campos:
+
+```env
+MONGO_URI=
+JWT_SECRET=
+```
+
+#### Como obter:
+
+- **MONGO_URI**: Crie um cluster gratuito no [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) e copie a string de conexão.
+- **JWT_SECRET**: Defina qualquer string segura para ser usada como chave de autenticação (ex: `minha_chave_super_segura`).
+
+#### Exemplo:
+
+```env
+MONGO_URI=mongodb+srv://usuario:senha@cluster.mongodb.net/?retryWrites=true&w=majority
+JWT_SECRET=minha_chave_super_segura
+```
+
+---
+
+## 🧪 Testes Unitários
+Testes garantem que funcionalidades-chave, como o sistema de favoritos, funcionem corretamente e que mudanças futuras não quebrem o app. Por isso, todos os devidos testes unitários foram criados.
+
+```ts
+it('should retrieve pokemon species by name', () => {
+  const mockSpecies: PokemonSpecies = {
+    flavor_text_entries: [
+      {
+        flavor_text: "Quando exposto ao calor, ele armazena energia elétrica nas bochechas.",
+      }
+    ],
+    language: { name: 'en' }
+  };
+  const name = 'pikachu';
+
+  service.getPokemonSpecies(name).subscribe(species => {
+    expect(species).toEqual(mockSpecies);
+  });
+
+  const req = httpMock.expectOne(\`https://pokeapi.co/api/v2/pokemon-species/\${name}\`);
+  expect(req.request.method).toBe('GET');
+  req.flush(mockSpecies);
+});
+```
 
 ---
 
 ## 📡 Webhooks
 
-> O projeto envia eventos para um servidor backend local (Node.js + Express) sempre que um Pokémon for favoritado/desfavoritado ou quando o nível do treinador for alterado.
+O projeto envia eventos para um servidor backend (Express) sempre que um Pokémon for favoritado/desfavoritado ou o treinador subir de nível.
 
-### Como usar os webhooks localmente
-
-1. **Descomente a variável `webhookUrl` e as linhas com `this.http.post(this.webhookUrl, ...)` nos arquivos `favorite.service.ts` e `trainer.service.ts`**.
-3. Com o Docker, **descomente a chamada para a imagem do serviço backend no arquivo `docker-compose.yml`**.
-2. Certifique-se de que o backend está rodando (via Docker ou `npm run start-log`).
-3. O arquivo `backend/logs.txt` será gerado e atualizado automaticamente com mensagens formatadas, como:
-
-```
-O treinador Gustavo aumentou o nível: 1 → 2
-Pokémon pikachu foi favoritado pelo treinador Gustavo
-```
-
-### Exemplo de payload enviado:
+Exemplo de payload:
 
 ```ts
 this.http.post(this.webhookUrl, {
@@ -138,11 +165,7 @@ this.http.post(this.webhookUrl, {
 }).subscribe();
 ```
 
-> 💡 A URL padrão do webhook local é: `http://localhost:3000/webhook`  
-> 💬 Se for usar [https://webhook.site](https://webhook.site), altere a URL e desative CORS via proxy ou extensão.
-
-### Importante:
-Essas chamadas estão comentadas por padrão. Para produção (GitHub Pages), mantenha assim. Para rodar localmente, **descomente** e rode o backend.
+Os logs são salvos em `auth-backend/logs.txt`.
 
 ---
 
@@ -167,6 +190,8 @@ Na página de detalhes, os status do Pokémon são exibidos visualmente com core
 ## 🖼️ GIFs de Demonstração
 
 Confira os GIFs da aplicação na pasta [`src/assets/gifs`](https://github.com/gusteugenio/pokeapp-ionic/tree/main/src/assets/gifs), demonstrando:
+
+*serão ajustados em breve com nova funcionalidade de autenticação.
 
 - Paginação da lista de Pokémons
 - Filtragem por tipos
