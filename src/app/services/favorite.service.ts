@@ -4,6 +4,9 @@ import { Subject, of } from 'rxjs';
 import { TrainerService } from './trainer.service';
 import { tap, catchError } from 'rxjs/operators';
 
+// Localmente, troque para 'http://localhost:4000'.
+const API_BASE = 'https://pokeapp-ionic-backend.onrender.com';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,7 +28,7 @@ export class FavoriteService {
     const userId = this.trainerService.getTrainerId();
 
     if (userId) {
-      return this.http.get<{ favorites: string[] }>(`http://localhost:4000/favorites/get-favorites?userId=${userId}`).pipe(
+      return this.http.get<{ favorites: string[] }>(`${API_BASE}/favorites/get-favorites?userId=${userId}`).pipe(
         tap(response => {
           this.favorites = response.favorites;
           this.trainerService.levelUp(this.favorites.length);
@@ -103,7 +106,7 @@ export class FavoriteService {
   private syncFavorites() {
     const userId = this.trainerService.getTrainerId();
 
-    this.http.post('http://localhost:4000/favorites/sync-favorites', {
+    this.http.post(`${API_BASE}/favorites/sync-favorites`, {
       userId: userId,
       favorites: this.favorites
     }).subscribe(response => {

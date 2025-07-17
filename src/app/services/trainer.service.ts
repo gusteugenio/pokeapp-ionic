@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-const TRAINER_LEVEL_KEY = 'trainer_level';
 const POKEMONS_FOR_LEVEL_UP = 5;
 const MAX_TRAINER_LEVEL = 50;
+// Localmente, troque para 'http://localhost:4000'.
+const API_BASE = 'https://pokeapp-ionic-backend.onrender.com';
 
 @Injectable({
   providedIn: 'root'
@@ -88,7 +89,7 @@ export class TrainerService {
   loadTrainerInfo() {
     const userId = this.getTrainerId();
     if (userId) {
-      this.http.get<{ username: string, gender: 'male' | 'female' }>(`http://localhost:4000/trainer/get-trainer-info?userId=${userId}`)
+      this.http.get<{ username: string, gender: 'male' | 'female' }>(`${API_BASE}/trainer/get-trainer-info?userId=${userId}`)
         .subscribe({
           next: (response) => {
             this.trainerNameSubject.next(response.username);
