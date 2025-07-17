@@ -28,6 +28,10 @@ export class TrainerAreaPage implements OnInit {
       this.trainerLevel = level;
     });
 
+    this.favoriteService.loadFavorites().subscribe(() => {
+      this.capturedPokemonsCount = this.favoriteService.getFavorites().length;
+    });
+
     this.favoriteService.favoritesChanged.subscribe(() => {
       this.capturedPokemonsCount = this.favoriteService.getFavorites().length;
     });

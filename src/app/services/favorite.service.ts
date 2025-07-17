@@ -17,7 +17,7 @@ export class FavoriteService {
     private http: HttpClient,
     private trainerService: TrainerService
   ) {
-    this.loadFavorites();
+    this.loadFavorites().subscribe();
     this.trainerService.levelUp(this.favorites.length);
   }
 
