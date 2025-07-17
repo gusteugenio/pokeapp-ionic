@@ -1,12 +1,23 @@
 services:
   pokeapp:
-    build: .
+    build:
+      context: .
     ports:
       - "8100:8100"
     volumes:
       - .:/app
       - /app/node_modules
-    command: ionic serve --host 0.0.0.0 --port 8100
+
+  auth:
+    build:
+      context: ./auth-backend
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./auth-backend:/app
+      - /app/node_modules
+    env_file:
+      - ./auth-backend/.env
 
   # Descomente para fazer o build da imagem do backend (uso do webhook).
   # backend:
