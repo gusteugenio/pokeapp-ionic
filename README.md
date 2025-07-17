@@ -16,12 +16,12 @@
 O projeto está disponível em produção com deploys separados para frontend e backend:
 
 - Frontend hospedado no **Vercel**  
-- Backend hospedado no **Render**  
+- Backend hospedado no **Railway**  
 
 ### Branches do repositório
 
-- A branch `main` é focada no desenvolvimento local, testes e atualizações para desenvolvimento (utilize ao clonar o repositório) 
-- A branch `prod` contém o código para deploy e produção, usada para builds no Vercel (frontend) e Render (backend)
+- A branch `main` é focada no desenvolvimento local, testes e atualizações para desenvolvimento (utilize ao clonar o repositório)
+- A branch `prod` contém o código para deploy e produção, usada para builds no Vercel (frontend) e Railway (backend)
 
 ---
 
@@ -54,7 +54,7 @@ O projeto está disponível em produção com deploys separados para frontend e 
 - 🐳 Ambiente integrado com Docker (frontend, backend e webhook)
 - 🧪 Testes unitários com cobertura de funcionalidades-chave
 - 🔗 Webhooks para eventos de captura e progresso de nível
-- 🌐 Deploy contínuo via Vercel e Render
+- 🌐 Deploy contínuo via Vercel e Railway
 
 ---
 
@@ -73,11 +73,11 @@ O projeto está disponível em produção com deploys separados para frontend e 
 
 O backend é desenvolvido em **Node.js** com **Express**, utilizando **MongoDB** para persistência e **JWT** para autenticação.  
 
-Ele é hospedado de forma independente no Render, possibilitando escalabilidade e isolamento. 
+Ele é hospedado de forma independente no Railway, possibilitando escalabilidade e isolamento. 
 
 Sua principal responsabilidade é gerenciar autenticação, favoritos, informações do treinador, e sincronização de dados entre frontend e banco.  
 
-API base: https://pokeapp-ionic-backend.onrender.com
+API base: https://pokeapp-ionic-production.up.railway.app
 
 ---
 
