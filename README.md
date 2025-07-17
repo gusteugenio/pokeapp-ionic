@@ -149,6 +149,40 @@ JWT_SECRET=minha_chave_super_segura
 
 ---
 
+## 📡 Webhooks
+
+O projeto envia eventos para um servidor backend (Express) sempre que um Pokémon for favoritado/desfavoritado ou o treinador mudar de nível.
+
+### Como usar os webhooks localmente
+
+
+1. **Descomente a variável `webhookUrl` e as linhas com `this.http.post(this.webhookUrl, ...)` nos arquivos `favorite.service.ts` e `trainer.service.ts`**.
+3. Caso esteja utilizando o Docker, **descomente a chamada para a imagem do serviço backend no arquivo `docker-compose.yml`**.
+2. Certifique-se de que o backend está rodando (via Docker ou `npm run start-log`).
+3. O arquivo `backend/logs.txt` será gerado e atualizado automaticamente com mensagens formatadas, como:
+
+
+```
+O treinador Gustavo aumentou o nível: 1 → 2
+Pokémon pikachu foi favoritado pelo treinador Gustavo
+
+```
+
+### Exemplo de payload enviado:
+
+```ts
+this.http.post(this.webhookUrl, {
+  event: 'favorited',
+  pokemon: name,
+  trainerName: this.trainerService.getTrainerName(),
+  trainerGender: this.trainerService.getTrainerGender()
+}).subscribe();
+```
+
+Os logs são salvos em `auth-backend/logs.txt`.
+
+---
+
 ## 🧪 Testes Unitários
 Testes garantem que funcionalidades-chave, como o sistema de favoritos, funcionem corretamente e que mudanças futuras não quebrem o app. Por isso, todos os devidos testes unitários foram criados.
 
@@ -173,25 +207,6 @@ it('should retrieve pokemon species by name', () => {
   req.flush(mockSpecies);
 });
 ```
-
----
-
-## 📡 Webhooks
-
-O projeto envia eventos para um servidor backend (Express) sempre que um Pokémon for favoritado/desfavoritado ou o treinador mudar de nível.
-
-Exemplo de payload:
-
-```ts
-this.http.post(this.webhookUrl, {
-  event: 'favorited',
-  pokemon: name,
-  trainerName: this.trainerService.getTrainerName(),
-  trainerGender: this.trainerService.getTrainerGender()
-}).subscribe();
-```
-
-Os logs são salvos em `auth-backend/logs.txt`.
 
 ---
 
