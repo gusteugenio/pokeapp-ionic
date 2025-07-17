@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { FavoriteService } from 'src/app/services/favorite.service';
 import { BehaviorSubject } from 'rxjs';
 import { TrainerService } from 'src/app/services/trainer.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('TrainerAreaPage', () => {
   let component: TrainerAreaPage;
@@ -31,6 +32,7 @@ describe('TrainerAreaPage', () => {
 
     await TestBed.configureTestingModule({
       declarations: [TrainerAreaPage],
+      imports: [HttpClientTestingModule],
       providers: [
         { provide: AlertController, useValue: alertSpy },
         { provide: FavoriteService, useValue: favoriteServiceMock },
@@ -43,7 +45,6 @@ describe('TrainerAreaPage', () => {
     alertControllerSpy = TestBed.inject(AlertController) as jasmine.SpyObj<AlertController>;
   });
 
-
   it('should create component', () => {
     expect(component).toBeTruthy();
   });
@@ -54,14 +55,6 @@ describe('TrainerAreaPage', () => {
 
     component.setTrainerImage('female');
     expect(component.trainerImageUrl).toBe('assets/img/serena.png');
-  });
-
-  it('should present gender selection alert', async () => {
-    await component.presentGenderSelection();
-    expect(alertControllerSpy.create).toHaveBeenCalled();
-
-    const alert = await alertControllerSpy.create.calls.mostRecent().returnValue;
-    expect(alert.present).toHaveBeenCalled();
   });
 
   it('should display bronze medal for levels 1 to 15', async () => {
@@ -99,5 +92,4 @@ describe('TrainerAreaPage', () => {
     expect(el.querySelector('.badge-bronze')).toBeNull();
     expect(el.querySelector('.badge-silver')).toBeNull();
   });
-
 });

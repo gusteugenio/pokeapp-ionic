@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { TrainerService } from './trainer.service';
-
-const FAVORITES_KEY = 'pokemon_favorites';
+import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -22,13 +21,28 @@ export class FavoriteService {
     this.trainerService.levelUp(this.favorites.length);
   }
 
-  private loadFavorites() {
-    const fav = localStorage.getItem(FAVORITES_KEY);
-    this.favorites = fav ? JSON.parse(fav) : [];
+  loadFavorites() {
+    const userId = this.trainerService.getTrainerId();
+
+    if (userId) {
+      return this.http.get<{ favorites: string[] }>(`http://localhost:4000/favorites/get-favorites?userId=${userId}`).pipe(
+        tap(response => {
+          this.favorites = response.favorites;
+          this.trainerService.levelUp(this.favorites.length);
+          this.favoritesChanged.next();
+        }),
+        catchError(err => {
+          console.error('Erro ao carregar os favoritos', err);
+          return of(null);
+        })
+      );
+    } else {
+      console.log('ID do usuário não encontrado.');
+      return of(null);
+    }
   }
 
   private saveFavorites() {
-    localStorage.setItem(FAVORITES_KEY, JSON.stringify(this.favorites));
     this.favoritesChanged.next();
     this.trainerService.levelUp(this.favorites.length);
   }
@@ -45,6 +59,8 @@ export class FavoriteService {
     if (!this.isFavorite(name)) {
       this.favorites.push(name);
       this.saveFavorites();
+      this.syncFavorites();
+
       // this.http.post(this.webhookUrl, {
       //   event: 'favorited',
       //   pokemon: name,
@@ -56,6 +72,8 @@ export class FavoriteService {
   removeFavorite(name: string) {
     this.favorites = this.favorites.filter(f => f !== name);
     this.saveFavorites();
+    this.syncFavorites();
+    
     // this.http.post(this.webhookUrl, {
     //   event: 'unfavorited',
     //   pokemon: name,
@@ -74,9 +92,24 @@ export class FavoriteService {
   clearFavorites() {
     this.favorites = [];
     this.saveFavorites();
+    this.syncFavorites();
+
     // this.http.post(this.webhookUrl, {
     //   event: 'favorites_cleared',
     //   trainerName: this.trainerService.getTrainerName()
     // }).subscribe();
+  }
+
+  private syncFavorites() {
+    const userId = this.trainerService.getTrainerId();
+
+    this.http.post('http://localhost:4000/favorites/sync-favorites', {
+      userId: userId,
+      favorites: this.favorites
+    }).subscribe(response => {
+      console.log('Favoritos sincronizados no backend', response);
+    }, error => {
+      console.error('Erro ao sincronizar favoritos no backend', error);
+    });
   }
 }
