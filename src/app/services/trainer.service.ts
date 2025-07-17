@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 const POKEMONS_FOR_LEVEL_UP = 5;
 const MAX_TRAINER_LEVEL = 50;
-const API_BASE = 'https://pokeapp-ionic-backend.onrender.com';
+const API_BASE = 'https://pokeapp-ionic-production.up.railway.app';
 
 @Injectable({
   providedIn: 'root'

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-const API_BASE = 'https://pokeapp-ionic-backend.onrender.com';
+const API_BASE = 'https://pokeapp-ionic-production.up.railway.app';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

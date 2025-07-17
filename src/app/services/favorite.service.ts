@@ -4,7 +4,7 @@ import { Subject, of } from 'rxjs';
 import { TrainerService } from './trainer.service';
 import { tap, catchError } from 'rxjs/operators';
 
-const API_BASE = 'https://pokeapp-ionic-backend.onrender.com';
+const API_BASE = 'https://pokeapp-ionic-production.up.railway.app';
 
 @Injectable({
   providedIn: 'root'
